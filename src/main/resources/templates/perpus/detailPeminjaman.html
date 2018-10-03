@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Perpus - Detail Peminjaman</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <div class="container">
+        <h1>Detail Peminjaman</h1>
+        <p>
+            <a href="/perpus/buku/listBuku" th:href="@{/perpus/buku/listBuku}">Menu Utama</a>
+        </p>  
+       	<div class="form-group">
+            <label for="content">Kode Peminjaman :</label>
+            <input type="text" class="form-control" name="kdpeminjaman" th:field="${peminjaman.kdpeminjaman}" readonly/>
+        </div>
+        <div class="form-group">
+        	<label for="content">Id Peminjam :</label>
+            <input type="text" class="form-control" name="idpeminjam" th:field="${peminjaman.anggota.idanggota}" readonly/>
+        </div>
+        <div class="form-group">
+        	<label for="content">Nama Peminjam :</label>
+            <input type="text" class="form-control" name="nama_peminjam" th:field="${peminjaman.anggota.nama_anggota}" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="content">Kode Buku :</label>
+            <input type="text" class="form-control" name="kdbuku" th:field="${peminjaman.buku.kdbuku}" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="content">Judul Buku :</label>
+            <input type="text" class="form-control" name="judul" th:field="${peminjaman.buku.judul}" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="content">Jumlah :</label>
+            <input type="text" class="form-control" name="jumlah" th:field="${peminjaman.jumlah}" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="content">Tgl Pinjam :</label>
+            <input type="text" class="form-control" name="jumlah" th:field="${peminjaman.tgl_pinjam}" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="content">Tgl Kembali :</label>
+            <input type="text" class="form-control" name="jumlah" th:field="${peminjaman.tgl_kembali}" readonly/>
+        </div>
+        <a href="#" th:href="@{/perpus/peminjaman/listPeminjaman}" class="btn btn-danger" role="button">Cancel</a>
+    </div>
+</body>
+</html>

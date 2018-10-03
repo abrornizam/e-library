@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Perpus - List Anggota</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" />
+    <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>  
+    <script type="text/javascript">
+        function doDetail(idanggota){
+        	window.location.href = '/perpus/anggota/detail/'+idanggota;
+        }
+        
+        function doEdit(idanggota){
+        	window.location.href = '/perpus/anggota/edit/'+idanggota;
+        }
+                   
+		function doDelete(idanggota){
+			var hapusData = confirm("Do you want to delete this record ?");
+			if(hapusData == true){
+				window.location.href = '/perpus/anggota/delete/'+idanggota;
+			}else{
+				window.location.href = '#';
+			}
+		}
+		
+		$(document).ready(function(){
+			$.ajax({
+				type: "GET",
+				url: "/rest/perpus/anggota/listAnggota",
+				dataType: "json",
+				contentTye: "application/json",
+				success: function(data){
+					var hasilData = JSON.parse(JSON.stringify(data));
+					for(i=0; i<hasilData.length; i++){
+						var idanggota = document.getElementById("idanggota");
+						var nama_anggota = document.getElementById("nama_anggota");	
+						idanggota.innerHTML = hasilData[i].idpeminjam;						
+						nama_anggota.innerHTML = hasilData[i].nama_peminjam;
+						console.log(hasilData[i].idpeminjam + " - " + hasilData[i].nama_peminjam);
+					}
+				},
+				error: function(data){
+					window.alert("ERROR BRO!");
+				}
+			})
+		})
+	</script>
+</head>
+<body>
+    <div class="container">
+        <h1>List Anggota</h1>
+        <p>
+            <a href="/perpus/buku/listBuku" th:href="@{/perpus/buku/listBuku}">Menu Utama</a> |
+            <a href="/perpus/anggota/addAnggota" th:href="@{/perpus/anggota/addAnggota}">Add Anggota</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id Anggota</th>
+                    <th>Nama</th>
+                    <th>Alamat</th>
+                    <th>Email</th>
+                    <th>Tgl Join</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="anggota : ${anggota}" id="data">
+                    <td th:text="${anggota.idanggota}">${anggota.idanggota}</td>
+                    <td th:text="${anggota.nama_anggota}">${anggota.nama_anggota}</td>
+                    <td th:text="${anggota.alamat}">${anggota.alamat}</td>
+                    <td th:text="${anggota.email}">${anggota.email}</td>
+                    <td th:text="${anggota.tgl_join}">${anggota.tgl_join}</td>                                        
+                    <td>
+                    	<input type="button" value="Detail" class="btn btn-secondary" th:onclick="|doDetail('${anggota.idanggota}');|"/>
+                        <input type="button" value="Edit" class="btn btn-primary" th:onclick="|doEdit('${anggota.idanggota}');|"/>                        
+                        <input type="button" value="Delete" class="btn btn-danger" th:onclick="|doDelete('${anggota.idanggota}');|"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

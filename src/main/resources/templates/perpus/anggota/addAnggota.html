@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Perpus - Add Peminjam</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" />
+    <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>
+    <!-- AJAX -->
+    <script type="text/javascript">
+	    $(document).ready(function(){    	
+	    		
+	    		var myData = {
+    				idpeminjam : $("#idpeminjam").val(),
+    				nama_peminjam : $("#nama_peminjam").val()
+	    		} 			
+    			
+	            $.ajax({
+	            	type: "GET",
+	                contentType: "application/json",
+	                url: "/rest/perpus/peminjam/listPeminjam",
+	                data: JSON.stringify(myData),
+	                dataType: "json",
+	                success: function(data){
+	                	console.log("SUCCESS : " + myData);
+	                },
+	                error: function(data){
+	                	console.log("ERROR : ", data);
+	                }
+	            });
+	    });
+	    
+	    function doCancel(){
+	    	window.location.href = '/perpus/peminjam/listPeminjam'
+	    }
+    </script>        
+</head>
+<body>
+    <div class="container">
+        <h1>Add Anggota</h1>
+        <p>
+            <a href="/perpus/buku/listBuku" th:href="@{/perpus/buku/listBuku}">Menu Utama</a>
+        </p>
+        <form class="form-group" action="/perpus/anggota/saveAnggota" th:action="@{/perpus/anggota/saveAnggota}" method="post">  
+        <!-- <form id="myForm" class="form-group"> -->
+        	<input th:type="hidden" name="idanggota" path="idanggota" id="idanggota" />
+        	<div class="form-group">
+                <label for="content">Nama :</label>
+                <input type="text" class="form-control" name="nama_anggota" path="nama_anggota" id="nama_anggota" />
+            </div>
+            <div class="form-group">
+                <label for="content">Alamat :</label>
+                <textarea class="form-control" name="alamat" path="alamat" id="alamat" style="max-width:500px; max-height:150px"/></textarea>
+            </div>
+            <div class="form-group">
+                <label for="content">No Telp :</label>
+                <input type="number" class="form-control" name="no_telp" path="no_telp" id="no_telp" />
+            </div>
+            <div class="form-group">
+                <label for="content">Email :</label>
+                <input type="email" class="form-control" name="email" path="email" id="email" />
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+            <input type="button" value="Cancel" class="btn btn-danger" onclick="doCancel();"/>
+        </form>
+    </div>
+</body>
+</html>

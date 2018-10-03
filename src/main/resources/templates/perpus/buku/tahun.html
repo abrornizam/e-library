@@ -1,0 +1,4 @@
+<label for="content">Judul Buku :</label>                
+<select class="form-control">
+ 	<option th:each="buku : ${buku}" th:value="${buku.judul}" th:text="${buku.judul}"></option>
+</select>

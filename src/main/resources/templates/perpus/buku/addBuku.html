@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Perpus - Add Buku</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" />
+    <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>
+    <!-- AJAX -->
+    <script type="text/javascript">
+	    $(document).ready(function(){
+	    	$("#dropdownTahun").change(function(){
+	    		var tahun = $("#dropdownTahun").val();    			
+    			
+	            $.ajax({
+	            	type: "get",
+	                url: "/perpus/buku/tahun",
+	                data: "tahun="+tahun,
+	                success: function(data){
+	                    $("#result").html(data);
+	                },
+	                error: function(data){
+	                	alert("GAGAL : " + data);
+	                }
+	            });
+	        });
+	    });
+    </script>        
+</head>
+<body>
+    <div class="container">
+        <h1>Add Buku</h1>
+        <p>
+            <a href="/perpus/buku/listBuku" th:href="@{/perpus/buku/listBuku}">Menu Utama</a>
+        </p>
+        <form class="form-group" action="/perpus/buku/saveBuku" th:action="@{/perpus/buku/saveBuku}" method="post">  
+        	<input th:type="hidden" name="kdbuku" path="kdbuku" id="kdbuku"/>
+            <div class="form-group">
+                <label for="content">Judul :</label>
+                <input type="text" class="form-control" name="judul" path="judul" id="judul" />
+            </div>
+            <div class="form-group">
+                <label for="content">Pengarang Id :</label>                
+                <select class="form-control" name="pengarang.id" id="pengarang.id">
+			    	<option value="0">-</option>
+			    	<option th:each="pengarang : ${pengarang}" th:value="${pengarang.id}" th:text="${pengarang.id + ' - ' + pengarang.nama_pengarang}"></option>
+			    </select>                
+            </div>            
+            <div class="form-group">
+                <label for="content">Deskripsi :</label>
+                <textarea class="form-control" name="deskripsi" path="deskripsi" id="deskripsi" style="max-width:500px; max-height:150px"/></textarea>
+            </div>
+            <div class="form-group">
+                <label for="content">Tahun :</label>
+                <input type="text" class="form-control" name="tahun" path="tahun" id="tahun" />
+            </div>
+            <!-- AJAX -->
+            <!--  <div class="form-group">
+                <label for="content">Dropdown Tahun :</label>                
+                <select class="form-control" name="dropdownTahun" id="dropdownTahun">
+			    	<option value="2016">2016</option>
+			    	<option value="2017">2017</option>
+			    	<option value="2018">2018</option>
+			    </select>                
+            </div>
+            
+            <div class="form-group" id="result">
+            	<label for="content">Judul Buku :</label>                
+			    <select class="form-control">
+				  	<option value="0">-</option>
+				</select>
+            </div> -->
+            <div class="form-group">
+                <label for="content">Jumlah :</label>
+                <input type="text" class="form-control" name="jumlah" path="jumlah" id="jumlah" />
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+            <a href="#" th:href="@{/perpus/buku/listBuku}" class="btn btn-danger" role="button">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

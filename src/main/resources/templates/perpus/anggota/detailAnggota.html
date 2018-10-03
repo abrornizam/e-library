@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Perpus - Detail Anggota</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <div class="container">
+        <h1>Detail Anggota</h1>
+        <p>
+            <a href="/perpus/buku/listBuku" th:href="@{/perpus/buku/listBuku}">Menu Utama</a>
+        </p>  
+       	<div class="form-group">
+            <label for="content">Id Anggota :</label>
+            <input type="text" class="form-control" name="idanggota" th:field="${anggota.idanggota}" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="content">Nama Anggota :</label>
+            <input type="text" class="form-control" name="nama_anggota" th:field="${anggota.nama_anggota}" readonly/>
+        </div>
+       	<div class="form-group">
+        	<label for="content">Alamat :</label>
+            <input type="text" class="form-control" name="alamat" th:field="${anggota.alamat}" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="content">No Telp :</label>
+            <input type="text" class="form-control" name="no_telp" th:field="${anggota.no_telp}" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="content">Email :</label>
+            <input type="text" class="form-control" name="email" th:field="${anggota.email}" readonly/>
+        </div>
+        <div class="form-group">
+            <label for="content">Tanggal Join :</label>
+            <input type="text" class="form-control" name="tgl_join" th:field="${anggota.tgl_join}" readonly/>
+        </div>        
+        <a href="#" th:href="@{/perpus/buku/listBuku}" class="btn btn-danger" role="button">Cancel</a>
+    </div>
+</body>
+</html>
