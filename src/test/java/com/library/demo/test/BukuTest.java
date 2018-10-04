@@ -1,6 +1,7 @@
 package com.library.demo.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,10 +50,17 @@ public class BukuTest {
 	}
 		
 	@Test
-	public void findBukuByKodeBuku() {
+	public void bukuFound() {
 		String kdBuku = "B001";		
 		Buku buku = bukuRepository.findByKdbuku(kdBuku);
 		assertEquals(buku.getKdbuku(), kdBuku); 
+	}
+	
+	@Test
+	public void bukuNotFound() {
+		String kdBuku = "B002";
+		Buku buku = bukuRepository.findByKdbuku(kdBuku);
+		assertNull(buku);		
 	}
 	
 }
