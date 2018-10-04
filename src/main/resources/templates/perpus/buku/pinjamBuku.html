@@ -88,7 +88,7 @@
             <a href="/perpus/buku/listBuku" th:href="@{/perpus/buku/listBuku}">Menu Utama</a>
         </p>        
         <form id="myForm" class="form-group" action="/perpus/peminjaman/savePinjamBuku" th:action="@{/perpus/peminjaman/savePinjamBuku}" method="post">
-        	<input th:type="hidden" name="kdpeminjaman" path="kdpeminjaman" id="kdpeminjaman"/>
+        	<input th:type="hidden" name="id" path="id" id="id"/>
         	<div class="form-group">
                 <label for="content">Kode Buku :</label>
                 <input type="text" class="form-control" name="buku.kdbuku" path="buku.kdbuku" id="buku.kdbuku" th:value="${buku.kdbuku}" readonly/>                

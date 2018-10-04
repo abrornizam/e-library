@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.library.demo.model.Peminjaman;
 
 @Repository
-public interface PeminjamanRepository extends JpaRepository<Peminjaman, String>{
+public interface PeminjamanRepository extends JpaRepository<Peminjaman, Integer>{
 
 	Peminjaman findByKdpeminjaman(String kdpeminjaman);
 

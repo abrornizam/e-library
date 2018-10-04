@@ -60,6 +60,8 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 //			System.out.println("PRINT AJALAH : " + peminjamanRepository.hashCode());
 //			return peminjamanRepository.
 //		}
+		peminjaman.setKdpeminjaman("TRX"+peminjaman.getId());
+		System.out.println("Transaksi Id : " + peminjaman.getKdpeminjaman());
 		Date tgl_pinjam = new Date();
 		peminjaman.setStatus(true);
 		peminjaman.setTgl_pinjam(tgl_pinjam);

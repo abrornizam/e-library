@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.library.demo.model.Buku;
 
 @Repository
-public interface BukuRepository extends JpaRepository<Buku, String>{
+public interface BukuRepository extends JpaRepository<Buku, Integer>{
 
 	@Query(value = "select * from buku where status=true", nativeQuery=true)
 	List<Buku> findAll();

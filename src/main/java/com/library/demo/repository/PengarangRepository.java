@@ -12,5 +12,6 @@ import com.library.demo.model.Pengarang;
 
 @Repository
 public interface PengarangRepository extends JpaRepository<Pengarang, Integer>{
-
+	
+	
 }

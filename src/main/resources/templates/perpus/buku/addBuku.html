@@ -36,7 +36,7 @@
             <a href="/perpus/buku/listBuku" th:href="@{/perpus/buku/listBuku}">Menu Utama</a>
         </p>
         <form class="form-group" action="/perpus/buku/saveBuku" th:action="@{/perpus/buku/saveBuku}" method="post">  
-        	<input th:type="hidden" name="kdbuku" path="kdbuku" id="kdbuku"/>
+        	<input th:type="hidden" name="id" path="id" id="id"/>
             <div class="form-group">
                 <label for="content">Judul :</label>
                 <input type="text" class="form-control" name="judul" path="judul" id="judul" />

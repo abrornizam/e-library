@@ -25,6 +25,8 @@ public class BukuServiceImpl implements BukuService {
 	@Override
 	public void saveBuku(Buku buku) {
 		// TODO Auto-generated method stub
+		buku.setKdbuku("BOOK"+buku.getId());
+		System.out.println("Kode Buku : " + buku.getKdbuku());
 		buku.setStatus(true);
 		bukuRepository.save(buku);
 	}
@@ -36,6 +38,7 @@ public class BukuServiceImpl implements BukuService {
 		if(entity != null) {
 			entity.setKdbuku(buku.getKdbuku());
 			entity.setJudul(buku.getJudul());
+			entity.setDeskripsi(buku.getDeskripsi());
 			entity.setTahun(buku.getTahun());
 			entity.setJumlah(buku.getJumlah());
 			entity.setPengarang(buku.getPengarang());

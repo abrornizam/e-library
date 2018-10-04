@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.library.demo.model.Anggota;
 
 @Repository
-public interface AnggotaRepository extends JpaRepository<Anggota, String>{
+public interface AnggotaRepository extends JpaRepository<Anggota, Integer>{
 
 	@Query(value = "select * from anggota where status=true", nativeQuery = true)
 	List<Anggota> findAll();

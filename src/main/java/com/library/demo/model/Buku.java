@@ -8,20 +8,29 @@ package com.library.demo.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="buku")
 public class Buku {
 	
 	@Id
-	@GenericGenerator(name = "sequence_kdbuku", strategy = "com.abror.demo.config.BukuGenerator")
-	@GeneratedValue(generator = "sequence_kdbuku")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="id", updatable = false, nullable = false)
+	private int id;
+		
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Column(name="kdbuku")
 	private String kdbuku;
 	

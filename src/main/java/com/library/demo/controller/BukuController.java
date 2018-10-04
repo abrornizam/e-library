@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,8 +48,11 @@ public class BukuController {
     }
 	
 	@RequestMapping(value = "/saveBuku", method = RequestMethod.POST)
-    public String saveBuku(@Valid Buku buku, ModelMap model) {
-    	bukuService.saveBuku(buku);
+    public String saveBuku(@Valid Buku buku, BindingResult result, ModelMap model) {				
+		if(result.getErrorCount() > 0) {
+			System.out.println("ERROR MAS BRO!");
+		}
+		bukuService.saveBuku(buku);    	
     	return "redirect:/perpus/buku/listBuku";
     }
 	
