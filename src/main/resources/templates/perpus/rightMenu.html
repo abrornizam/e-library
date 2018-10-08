@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Index Perpustakaan</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+</head>
+<body>
+	<nav class="sidebar sidebar-offcanvas" id="sidebar">
+	  <ul class="nav">
+	    <li class="nav-item">
+	      <a class="nav-link" data-toggle="collapse" href="/perpus/buku/listBuku" aria-expanded="false" aria-controls="ui-basic">
+	        <span class="menu-title">Book</span>
+	        <i class="menu-arrow"></i>
+	        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+	      </a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" data-toggle="collapse" href="/perpus/anggota/listAnggota" aria-expanded="false" aria-controls="ui-basic">
+	        <span class="menu-title">Member</span>
+	        <i class="menu-arrow"></i>
+	        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+	      </a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" data-toggle="collapse" href="/perpus/peminjaman/listPeminjaman" aria-expanded="false" aria-controls="ui-basic">
+	        <span class="menu-title">Transaction</span>
+	        <i class="menu-arrow"></i>
+	        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+	      </a>
+	    </li>            
+	  </ul>          
+	</nav>
+</body>
+</html>

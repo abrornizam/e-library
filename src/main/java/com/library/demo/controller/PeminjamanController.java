@@ -44,7 +44,7 @@ public class PeminjamanController {
     public String listPeminjaman(ModelMap model) {
     	List<Peminjaman> peminjaman = peminjamanService.findAll();
     	model.addAttribute("peminjaman", peminjaman);
-    	return "perpus/listPeminjaman";
+    	return "/perpus/peminjaman/listPeminjaman";
     }
     
     @RequestMapping(value = "/pinjamBuku/{kdbuku}", method = RequestMethod.GET)
@@ -55,7 +55,7 @@ public class PeminjamanController {
     	model.addAttribute("buku", buku);
     	model.addAttribute("anggota", anggota);
     	model.addAttribute("peminjaman", peminjaman);
-    	return "/perpus/pinjamBuku";
+    	return "/perpus/buku/pinjamBuku";
     }
     
     @RequestMapping(value = "/savePinjamBuku", method = RequestMethod.POST)
@@ -73,7 +73,7 @@ public class PeminjamanController {
     public String detailPeminjaman(@PathVariable String kdpeminjaman, ModelMap model) {
     	Peminjaman p = peminjamanService.findByKdpeminjaman(kdpeminjaman);
     	model.addAttribute("peminjaman", p);
-    	return "/perpus/detailPeminjaman";
+    	return "/perpus/peminjaman/detailPeminjaman";
     }
 	
     @RequestMapping(value = "/deletePeminjaman/{kdpeminjaman}", method = RequestMethod.GET)

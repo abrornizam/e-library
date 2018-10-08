@@ -18,7 +18,7 @@ import com.library.demo.service.BukuService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BukuTest {
+public class BukuServiceTest {
 
 //	@TestConfiguration
 //	static class BukuTestConfiguration {
@@ -51,9 +51,9 @@ public class BukuTest {
 		
 	@Test
 	public void bukuFound() {
-		String kdBuku = "B001";		
+		String kdBuku = "B001";
 		Buku buku = bukuRepository.findByKdbuku(kdBuku);
-		assertEquals(buku.getKdbuku(), kdBuku); 
+		assertEquals(buku.getKdbuku(), kdBuku);
 	}
 	
 	@Test

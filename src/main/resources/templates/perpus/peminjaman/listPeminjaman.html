@@ -13,11 +13,29 @@
   <!-- <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" /> -->
   <!-- endinject -->
   <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>  
-  <link rel="shortcut icon" href="../../images/favicon.png" />    
-  <script type="text/javascript">
-  	function doCancel(){
-       	window.location.href = '/perpus/anggota/listAnggota'; 
-    }  	
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <style type="text/css">
+  	th {
+  		font-weight: 600;
+  	}
+  </style>
+  <script>
+  	function doDetail(kdpeminjaman){
+       	window.location.href = '/perpus/peminjaman/detailPeminjaman/'+kdpeminjaman; 
+    }
+                   
+	function doDelete(kdpeminjaman){
+		var hapusData = confirm("Do you want to delete this record ?");
+		if(hapusData == true){
+			window.location.href = '/perpus/peminjaman/deletePeminjaman/'+kdpeminjaman;
+		}else{
+			window.location.href = '#';
+		}
+	}
+	
+	function doBorrow(kdbuku){
+       	window.location.href = '/perpus/peminjaman/pinjamBuku/'+kdbuku; 
+    }
   </script>
 </head>
 <body>
@@ -39,35 +57,31 @@
   		<nav th:replace="/perpus/rightMenu::#sidebar"></nav>
         <!-- partial -->
         <div class="content-wrapper">
-            <div class="col-lg-12 grid-margin stretch-card">
+            <div class="col-lg-12 grid-margin stretch-card">           		
 			  <div class="card">
 			    <div class="card-body">
-			      <h4 class="card-title">Detail of Member</h4>			      
-			      	<div class="form-group">
-			            <label for="content">Member Id :</label>
-			            <input type="text" class="form-control" name="idanggota" th:field="${anggota.idanggota}" readonly/>
-			        </div>
-			        <div class="form-group">
-			            <label for="content">Name :</label>
-			            <input type="text" class="form-control" name="nama_anggota" th:field="${anggota.nama_anggota}" readonly/>
-			        </div>
-			       	<div class="form-group">
-			        	<label for="content">Address :</label>
-			            <input type="text" class="form-control" name="alamat" th:field="${anggota.alamat}" readonly/>
-			        </div>
-			        <div class="form-group">
-			            <label for="content">Telp Number :</label>
-			            <input type="text" class="form-control" name="no_telp" th:field="${anggota.no_telp}" readonly/>
-			        </div>
-			        <div class="form-group">
-			            <label for="content">Email :</label>
-			            <input type="text" class="form-control" name="email" th:field="${anggota.email}" readonly/>
-			        </div>
-			        <div class="form-group">
-			            <label for="content">Join Date :</label>
-			            <input type="text" class="form-control" name="tgl_join" th:field="${anggota.tgl_join}" readonly/>
-			        </div>
-			        <input type="button" value="Cancel" class="btn btn-danger" onclick="doCancel();"/>
+			      <h4 class="card-title">List of Transaction</h4>
+			      <table class="table table-striped">
+			        <thead>
+		                <tr>
+		                	<th>Transaction Code</th>
+		                    <th>Name</th>
+		                    <th>Title</th>
+		                    <th>Actions</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr th:each="peminjaman : ${peminjaman}">
+		                	<td id="kdpeminjaman" th:text="${peminjaman.kdpeminjaman}"></td>
+		                    <td th:text="${peminjaman.anggota.nama_anggota}">${peminjaman.anggota.nama_anggota}</td>
+		                    <td th:text="${peminjaman.buku.judul}">${peminjaman.buku.judul}</td>
+		                    <td>
+		                        <input type="button" value="Detail" class="btn btn-secondary" th:onclick="|doDetail('${peminjaman.kdpeminjaman}');|"/>
+		                        <input type="button" value="Delete" class="btn btn-danger" th:onclick="|doDelete('${peminjaman.kdpeminjaman}');|"/>                        
+		                    </td>
+		                </tr>
+		            </tbody>
+			      </table>
 			    </div>
 			  </div>
 			</div>

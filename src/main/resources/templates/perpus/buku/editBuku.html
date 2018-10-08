@@ -2,49 +2,100 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>Perpus - Edit Buku</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>E-Library :: Indonesia</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
+  <!-- <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+  <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" /> -->
+  <!-- endinject -->
+  <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>  
+  <link rel="shortcut icon" href="../../images/favicon.png" />  
+  <script type="text/javascript">
+  	function doCancel(){
+  		window.location.href = '/perpus/buku/listBuku';
+  	}
+   </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Edit Buku</h1>
-        <p>
-            <a href="/perpus/buku/listBuku" th:href="@{/perpus/buku/listBuku}">Menu Utama</a>
-        </p>
-        <form class="form-group" action="/perpus/buku/saveEditBuku" th:action="@{/perpus/buku/saveEditBuku}" method="post">
-	       	<div class="form-group">
-	            <label for="content">Kode Buku :</label>
-	            <input type="text" class="form-control" name="kdbuku" th:field="${buku.kdbuku}" readonly/>
-	        </div>
-	        <div class="form-group">
-	            <label for="content">Judul :</label>
-	            <input type="text" class="form-control" name="judul" th:field="${buku.judul}" />
-	        </div>
-	        <div class="form-group">
-	        	<label for="content">Pengarang Id :</label>
-	            <select class="form-control" name="pengarang.id" id="pengarang.id">
-			    	<option th:value="0">-</option>
-			    	<option th:each="pengarang : ${pengarang}" th:value="${pengarang.id}" th:text="${pengarang.id + ' - ' + pengarang.nama_pengarang}"></option>
-			    </select>
-	        </div>
-	        <div class="form-group">
-                <label for="content">Deskripsi :</label>
-                <textarea class="form-control" name="deskripsi" path="deskripsi" id="deskripsi" style="max-width:500px; max-height:150px" th:field="${buku.deskripsi}"/></textarea>
-            </div>	        
-	       	<div class="form-group">
-	            <label for="content">Tahun :</label>
-	            <input type="text" class="form-control" name="tahun" th:field="${buku.tahun}" />
-	        </div>
-	        <div class="form-group">
-	            <label for="content">Jumlah :</label>
-	            <input type="text" class="form-control" name="jumlah" th:field="${buku.jumlah}" />
-	        </div>	        
-	        <button type="submit" class="btn btn-success">Save</button>
-	        <a href="#" th:href="@{/perpus/buku/listBuku}" class="btn btn-danger" role="button">Cancel</a>
-	     </form>
-	 </div>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo justify-content-center" href="/perpus/index">E-Library</a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-stretch">
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>    
+    <div class="container-fluid page-body-wrapper">
+  		<div class="row row-offcanvas row-offcanvas-right">
+  		<!-- Right Menu -->
+  		<nav th:replace="/perpus/rightMenu::#sidebar"></nav>
+        <!-- partial -->
+        <div class="content-wrapper">
+            <div class="col-md-12 grid-margin stretch-card">
+	            <div class="card">
+	                <div class="card-body">
+	                  <h4 class="card-title">Edit Book</h4>
+		              <form class="forms-sample" action="/perpus/buku/saveEditBuku" th:action="@{/perpus/buku/saveEditBuku}" method="post">
+				       	<div class="form-group">
+				            <label for="content">Book Code :</label>
+				            <input type="text" class="form-control" name="kdbuku" th:field="${buku.kdbuku}" readonly/>
+				        </div>
+				        <div class="form-group">
+				            <label for="content">Title :</label>
+				            <input type="text" class="form-control" name="judul" th:field="${buku.judul}" />
+				        </div>
+				        <div class="form-group">
+				        	<label for="content">Author Id :</label>
+				            <select class="form-control" name="pengarang.id" id="pengarang.id">
+						    	<option th:value="0">-</option>
+						    	<option th:each="pengarang : ${pengarang}" th:value="${pengarang.id}" th:text="${pengarang.id + ' - ' + pengarang.nama_pengarang}"></option>
+						    </select>
+				        </div>
+				        <div class="form-group">
+			                <label for="content">Description :</label>
+			                <textarea class="form-control" name="deskripsi" path="deskripsi" id="deskripsi" style="max-width:500px; max-height:150px" th:field="${buku.deskripsi}"/></textarea>
+			            </div>	        
+				       	<div class="form-group">
+				            <label for="content">Year :</label>
+				            <input type="text" class="form-control" name="tahun" th:field="${buku.tahun}" />
+				        </div>
+				        <div class="form-group">
+				            <label for="content">Total of Book :</label>
+				            <input type="text" class="form-control" name="jumlah" th:field="${buku.jumlah}" />
+				        </div>	        
+				        <button type="submit" class="btn btn-success">Save</button>
+		            	<input type="button" value="Cancel" class="btn btn-danger" onclick="doCancel();"/>
+				     </form>
+           			</div>
+              	</div>
+            </div>            
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2017 <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap Dash</a>. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <script type="text/javascript" th:src="@{/js/chart.js}" /></script>
+  <script type="text/javascript" th:src="@{/js/dashboard.js}" /></script>
+  <script type="text/javascript" th:src="@{/js/misc.js}" /></script>
+  <script type="text/javascript" th:src="@{/js/off-canvas.js}" /></script>
 </body>
+
 </html>

@@ -29,69 +29,70 @@ public class BukuController {
 
 	@Autowired
 	BukuService bukuService;
-	
+
 	@Autowired
 	PengarangRepository pengarangRepository;
-	
+
 	@RequestMapping(value = "/listBuku", method = RequestMethod.GET)
-    public String listBuku(ModelMap model) {
-    	List<Buku> buku = bukuService.findAll();
-    	model.addAttribute("buku", buku);
-    	return "perpus/buku/listBuku";
-    }
-	
+	public String listBuku(ModelMap model) {
+		List<Buku> buku = bukuService.findAll();
+		model.addAttribute("buku", buku);
+		return "perpus/buku/listBuku";
+	}
+
 	@RequestMapping(value = "/addBuku", method = RequestMethod.GET)
-    public String addBuku(ModelMap model) {
-    	List<Pengarang> p = pengarangRepository.findAll();
-    	model.addAttribute("pengarang", p);
-        return "perpus/buku/addBuku";
-    }
-	
+	public String addBuku(ModelMap model) {
+		List<Pengarang> p = pengarangRepository.findAll();
+		model.addAttribute("pengarang", p);
+		return "perpus/buku/addBuku";
+	}
+
 	@RequestMapping(value = "/saveBuku", method = RequestMethod.POST)
-    public String saveBuku(@Valid Buku buku, BindingResult result, ModelMap model) {				
-		if(result.getErrorCount() > 0) {
+	public String saveBuku(@Valid Buku buku, BindingResult result, ModelMap model) {
+		if (result.getErrorCount() > 0) {
 			System.out.println("ERROR MAS BRO!");
 		}
-		bukuService.saveBuku(buku);    	
-    	return "redirect:/perpus/buku/listBuku";
-    }
-	
-//	Testing AJAX
-	
+		bukuService.saveBuku(buku);
+		return "redirect:/perpus/buku/listBuku";
+	}
+
+	// Testing AJAX
+
 	@RequestMapping(value = "/tahun", method = RequestMethod.GET)
-	public String tahunBuku(@RequestParam(value="tahun", required=false, defaultValue="2018") String tahun, ModelMap model) {
+	public String tahunBuku(@RequestParam(value = "tahun", required = false, defaultValue = "2018") String tahun,
+			ModelMap model) {
 		Buku buku = bukuService.findByTahun(tahun);
 		model.addAttribute("buku", buku);
 		return "/perpus/buku/tahun";
 	}
-	
-//	END OF AJAX
-	
+
+	// END OF AJAX
+
 	@RequestMapping(value = "/detail/{kdbuku}", method = RequestMethod.GET)
-    public String detailBuku(@PathVariable String kdbuku, ModelMap model) {
-    	Buku buku = bukuService.findByKode(kdbuku);
-    	model.addAttribute("buku", buku);
-    	return "/perpus/buku/detailBuku";
-    }
-    
-    @RequestMapping(value = "/edit/{kdbuku}", method = RequestMethod.GET)
-    public String editBuku(@PathVariable String kdbuku, ModelMap model) {
-    	Buku buku = bukuService.findByKode(kdbuku);
-    	model.addAttribute("pengarang", pengarangRepository.findAll());
-    	model.addAttribute("buku", buku);
-    	return "/perpus/buku/editBuku";    			
-    }
-    
-    @RequestMapping(value = "/saveEditBuku", method = RequestMethod.POST)
-    public String saveEditBuku(@Valid Buku buku, ModelMap model) {
-    	bukuService.updateBuku(buku);
-    	return "redirect:/perpus/buku/listBuku";
-    }
-    
-    @RequestMapping(value = "/delete/{kdbuku}", method = RequestMethod.GET)
-    public String deleteBuku(@PathVariable String kdbuku, ModelMap model) {
-    	bukuService.deleteBuku(kdbuku);
-    	return "redirect:/perpus/buku/listBuku";
-    }
-    
+	public String detailBuku(@PathVariable String kdbuku, ModelMap model) {
+		Buku buku = bukuService.findByKode(kdbuku);
+		model.addAttribute("buku", buku);
+		return "/perpus/buku/detailBuku";
+	}
+
+	@RequestMapping(value = "/edit/{kdbuku}", method = RequestMethod.GET)
+	public String editBuku(@PathVariable String kdbuku, ModelMap model) {
+		Buku buku = bukuService.findByKode(kdbuku);
+		model.addAttribute("pengarang", pengarangRepository.findAll());
+		model.addAttribute("buku", buku);
+		return "/perpus/buku/editBuku";
+	}
+
+	@RequestMapping(value = "/saveEditBuku", method = RequestMethod.POST)
+	public String saveEditBuku(@Valid Buku buku, ModelMap model) {
+		bukuService.updateBuku(buku);
+		return "redirect:/perpus/buku/listBuku";
+	}
+
+	@RequestMapping(value = "/delete/{kdbuku}", method = RequestMethod.GET)
+	public String deleteBuku(@PathVariable String kdbuku, ModelMap model) {
+		bukuService.deleteBuku(kdbuku);
+		return "redirect:/perpus/buku/listBuku";
+	}
+	
 }
