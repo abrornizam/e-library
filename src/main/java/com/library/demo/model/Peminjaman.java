@@ -101,6 +101,17 @@ public class Peminjaman {
 		this.tgl_kembali = tgl_kembali;
 	}
 	
+	@Column(name="status_peminjaman")
+	private String status_peminjaman;
+	
+	public String getStatus_peminjaman() {
+		return status_peminjaman;
+	}
+
+	public void setStatus_peminjaman(String status_peminjaman) {
+		this.status_peminjaman = status_peminjaman;
+	}
+
 	@Column(name="status")
 	private Boolean status;
 

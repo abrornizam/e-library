@@ -17,6 +17,12 @@ public interface PeminjamanService {
 	
 	Peminjaman findByKdpeminjaman(String kdpeminjaman);
 	
+	void acceptPeminjaman(String kdpeminjaman);
+	
+	void fundPeminjaman(String kdpeminjaman);
+	
+	int denda(String kdpeminjaman);
+		
 	void deletePeminjaman(String kdpeminjaman);
 	
 }

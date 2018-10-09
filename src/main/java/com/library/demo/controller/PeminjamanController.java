@@ -77,8 +77,21 @@ public class PeminjamanController {
     }
 	
     @RequestMapping(value = "/deletePeminjaman/{kdpeminjaman}", method = RequestMethod.GET)
-    public String deletePeminjaman(@PathVariable String kdpeminjaman, ModelMap model) {
+    public String deletePeminjaman(@PathVariable String kdpeminjaman) {
     	peminjamanService.deletePeminjaman(kdpeminjaman);
+    	return "redirect:/perpus/peminjaman/listPeminjaman";
+    }
+    
+    @RequestMapping(value = "/approve/{kdpeminjaman}", method = RequestMethod.GET)
+    public String approvePeminjaman(@PathVariable String kdpeminjaman) {
+    	peminjamanService.acceptPeminjaman(kdpeminjaman);
+    	return "redirect:/perpus/peminjaman/listPeminjaman";
+    }
+    
+    @RequestMapping(value = "/fund/{kdpeminjaman}", method = RequestMethod.GET)
+    public String fundPeminjaman(@PathVariable String kdpeminjaman) {
+    	peminjamanService.fundPeminjaman(kdpeminjaman);
+    	System.out.println("NILAI DENDA : " + peminjamanService.denda(kdpeminjaman));
     	return "redirect:/perpus/peminjaman/listPeminjaman";
     }
     

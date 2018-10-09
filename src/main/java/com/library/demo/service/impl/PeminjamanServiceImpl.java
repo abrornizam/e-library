@@ -44,27 +44,11 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 	@Override
 	public Peminjaman savePeminjaman(Peminjaman peminjaman) {
 		// TODO Auto-generated method stub
-//		String idpeminjam = "";
-//		String peminjam = peminjaman.getPeminjam().getIdpeminjam();
-//		List<Peminjaman> p = peminjamanRepository.findAll();
-//		for (Peminjaman peminjaman2 : p) {
-//			idpeminjam = peminjaman2.getPeminjam().getIdpeminjam();
-//			if(idpeminjam.equals(peminjam)) {
-//				idpeminjam = peminjam; 
-//				break;
-//			}
-//		}
-//
-//		if (idpeminjam.equals(peminjam)) {
-//			peminjamanRepository.hashCode();
-//			System.out.println("PRINT AJALAH : " + peminjamanRepository.hashCode());
-//			return peminjamanRepository.
-//		}
 		peminjaman.setKdpeminjaman("TRX"+peminjaman.getId());
-		System.out.println("Transaksi Id : " + peminjaman.getKdpeminjaman());
-		Date tgl_pinjam = new Date();
-		peminjaman.setStatus(true);
+		Date tgl_pinjam = new Date();		
 		peminjaman.setTgl_pinjam(tgl_pinjam);
+		peminjaman.setStatus_peminjaman("IN PROGRESS");
+		peminjaman.setStatus(true);
 		return peminjamanRepository.save(peminjaman);
 	}
 	
@@ -84,6 +68,35 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 			entity.setStatus(false);
 			entity.setTgl_kembali(tgl_kembali);			
 		}
+	}
+
+	@Override
+	public void acceptPeminjaman(String kdpeminjaman) {
+		// TODO Auto-generated method stub
+		Peminjaman entity = peminjamanRepository.findByKdpeminjaman(kdpeminjaman);
+		if(entity.getStatus_peminjaman().equals("IN PROGRESS")) {
+			entity.setStatus_peminjaman("APPROVED");
+		}
+	}
+
+	@Override
+	public void fundPeminjaman(String kdpeminjaman) {
+		// TODO Auto-generated method stub
+		Peminjaman entity = peminjamanRepository.findByKdpeminjaman(kdpeminjaman);
+		if(entity.getStatus_peminjaman().equals("APPROVED")) {
+			entity.setStatus_peminjaman("FINISH");
+		}
+	}
+
+	@Override
+	public int denda(String kdpeminjaman) {
+		// TODO Auto-generated method stub
+		int denda = 0;
+		int lamaPinjam = 5;
+		if(lamaPinjam > 3) {
+			denda = 5000;
+		}
+		return denda;
 	}
 
 }
