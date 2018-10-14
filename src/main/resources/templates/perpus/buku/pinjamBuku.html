@@ -2,128 +2,166 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>Perpus - Pinjam Buku</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" />
-    <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>  
-    <script type="text/javascript">    
-	    function callMe(field) {
-		  	field.value;
-		}
-    	
-    	function validateForm(){
-    		var form = document.getElementById("myForm");    		
-    		var jumlah_pinjam = document.getElementById("jumlah").value;
-    		var jumlah_buku = document.getElementById("buku.jumlah").value;    		
-    		    		
-    		if(jumlah_pinjam > jumlah_buku){    			
-        		window.alert("Jumlah Pinjam Buku Melebihi Jumlah Buku!");
-        	}else{
-        		form.method = "post";
-        		form.action = "/perpus/peminjaman/savePinjamBuku";
-        		document.body.appendChild(form);        		
-        		form.submit();
-        	}
-    	}
-    	
-    	function doCancel(){
-	    	var btnCancel = document.getElementById("cancel");	    	
-	    	btnCancel.setAttribute("href","/perpus/buku/listBuku");
-	    }    	
-    	
-   		$(document).ready(function(){
-   				   				
-   				$.ajax({
-   					type: "get",   					
-   					url: "/rest/perpus/anggota/listAnggota",
-   					dataType: "json",
-   					contentType: "application/json",
-   					success: function(data){
-   						var list = document.getElementById("myUL");
-   						var result = document.getElementById("result");
-   						var hasilData = JSON.parse(JSON.stringify(data));
-   						for(i=0; i<hasilData.length; i++){
-   							var li = document.createElement("li");
-   							var hasil = document.createElement("a");
-   							var idanggota = hasilData[i].idanggota;
-   	   						var nama_anggota = hasilData[i].nama_anggota;
-   	   						list.appendChild(li);
-   	   						li.appendChild(hasil);
-   	   						hasil.innerHTML = nama_anggota;
-   						}
-   					},
-   					error: function(data){
-   						window.alert("ERROR ! " + data);
-   					}
-   				});
-   		});    	
-    	
-    	// SEARCH    	
-    	function searchAnggota() {    		
-    	    var input, filter, ul, li, a, i;
-    	    input = document.getElementById("anggota.nama_anggota");
-    	    filter = input.value.toUpperCase();
-    	    ul = document.getElementById("myUL");
-    	    li = ul.getElementsByTagName("li");
-    	    var listAnggota = document.getElementById("listAnggota");
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>E-Library :: Indonesia</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
+  <!-- <link rel="stylesheet" type="text/css" media="all" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+  <link rel="stylesheet" type="text/css" media="all" href="../static/css/main.css" th:href="@{/css/main.css}" /> -->
+  <!-- endinject -->
+  <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>  
+  <link rel="shortcut icon" href="../../images/favicon.png" />  
+  <script type="text/javascript">
+  	function callMe(field) {
+	  	field.value;
+	}
+	
+	function validateForm(){
+		var form = document.getElementById("myForm");    		
+		var jumlah_pinjam = document.getElementById("jumlah").value;
+		var jumlah_buku = document.getElementById("buku.jumlah").value;    		
+		    		
+		if(jumlah_pinjam > jumlah_buku){    			
+  		window.alert("Jumlah Pinjam Buku Melebihi Jumlah Buku!");
+	  	}else{
+	  		form.method = "post";
+	  		form.action = "/perpus/peminjaman/savePinjamBuku";
+	  		document.body.appendChild(form);        		
+	  		form.submit();
+	  	}
+	}
+	
+	function doCancel(){
+  		var btnCancel = document.getElementById("cancel");	    	
+  		btnCancel.setAttribute("href","/perpus/buku/listBuku");
+  	}    	
+	
+	$(document).ready(function(){			   				
+		$.ajax({
+			type: "get",   					
+			url: "/rest/perpus/anggota/listAnggota",
+			dataType: "json",
+			contentType: "application/json",
+			success: function(data){
+				var list = document.getElementById("myUL");
+				var result = document.getElementById("result");
+				var hasilData = JSON.parse(JSON.stringify(data));
+				for(i=0; i<hasilData.length; i++){
+					var li = document.createElement("li");
+					var hasil = document.createElement("a");
+					var idanggota = hasilData[i].idanggota;
+  						var nama_anggota = hasilData[i].nama_anggota;
+  						list.appendChild(li);
+  						li.appendChild(hasil);
+  						hasil.innerHTML = nama_anggota;
+				}
+			},
+			error: function(data){
+				window.alert("ERROR ! " + data);
+			}
+		});
+	});    	
+	
+	// SEARCH    	
+	function searchAnggota() {    		
+	    var input, filter, ul, li, a, i;
+	    input = document.getElementById("anggota.nama_anggota");
+	    filter = input.value.toUpperCase();
+	    ul = document.getElementById("myUL");
+	    li = ul.getElementsByTagName("li");
+	    var listAnggota = document.getElementById("listAnggota");
 
-    	    for (i = 0; i < li.length; i++) {
-    	        a = li[i].getElementsByTagName("a")[0];
-    	        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {    	        	
-    	        	listAnggota.style.display = "";
-    	            li[i].style.display = "";
-    	        } else {
-    	            li[i].style.display = "none";
-    	        }
-    	    }
-		}
-    </script>    
+	    for (i = 0; i < li.length; i++) {
+	        a = li[i].getElementsByTagName("a")[0];
+	        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {    	        	
+	        	listAnggota.style.display = "";
+	            li[i].style.display = "";
+	        } else {
+	            li[i].style.display = "none";
+	        }
+	    }
+	}	
+  </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Pinjam Buku</h1>
-        <p>
-            <a href="/perpus/buku/listBuku" th:href="@{/perpus/buku/listBuku}">Menu Utama</a>
-        </p>        
-        <form id="myForm" class="form-group" action="/perpus/peminjaman/savePinjamBuku" th:action="@{/perpus/peminjaman/savePinjamBuku}" method="post">
-        	<input th:type="hidden" name="id" path="id" id="id"/>
-        	<div class="form-group">
-                <label for="content">Kode Buku :</label>
-                <input type="text" class="form-control" name="buku.kdbuku" path="buku.kdbuku" id="buku.kdbuku" th:value="${buku.kdbuku}" readonly/>                
-            </div>
-            <div class="form-group">
-                <label for="content">Judul :</label>
-                <input type="text" class="form-control" th:field="${buku.judul}" readonly/>
-            </div>
-            <div class="form-group">
-                <label for="content">Jumlah :</label>
-                <input type="text" class="form-control" onkeyup="callMe(this);" name="jumlah" path="jumlah" id="jumlah" />
-            </div>
-            <div class="form-group">
-                <label for="content">Jumlah Ketersediaan Buku :</label>
-                <input type="text" class="form-control" name="buku.jumlah" path="buku.jumlah" id="buku.jumlah" th:field="${buku.jumlah}" readonly/>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo justify-content-center" href="/perpus/index">E-Library</a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-stretch">
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>    
+    <div class="container-fluid page-body-wrapper">
+  		<div class="row row-offcanvas row-offcanvas-right">
+  		<!-- Right Menu -->
+  		<nav th:replace="/perpus/rightMenu::#sidebar"></nav>
+        <!-- partial -->
+        <div class="content-wrapper">
+            <div class="col-md-12 grid-margin stretch-card">
+	            <div class="card">
+	                <div class="card-body">
+	                  <h4 class="card-title">Borrow Book</h4>
+		              <form id="myForm" class="form-sample" action="/perpus/peminjaman/savePinjamBuku" th:action="@{/perpus/peminjaman/savePinjamBuku}" method="post">  
+			        	<input th:type="hidden" name="id" path="id" id="id"/>
+			        	<div class="form-group">
+			                <label for="content">Book Code :</label>
+			                <input type="text" class="form-control" name="buku.kdbuku" path="buku.kdbuku" id="buku.kdbuku" th:value="${buku.kdbuku}" readonly/>                
+			            </div>
+			            <div class="form-group">
+			                <label for="content">Title :</label>
+			                <input type="text" class="form-control" th:field="${buku.judul}" readonly/>
+			            </div>
+			            <div class="form-group">
+			                <label for="content">Total :</label>
+			                <input type="text" class="form-control" onkeyup="callMe(this);" name="jumlah" path="jumlah" id="jumlah" />
+			            </div>
+			            <div class="form-group">
+			                <label for="content">Available Book :</label>
+			                <input type="text" class="form-control" name="buku.jumlah" path="buku.jumlah" id="buku.jumlah" th:field="${buku.jumlah}" readonly/>
+			            </div>            
+			            <div class="form-group">
+			                <label for="content">Member Id :</label>
+			                <input type="text" class="form-control" name="anggota.idanggota" path="anggota.idanggota" id="anggota.idanggota" />
+			            </div>
+			            <!-- SEARCH ID ANGGOTA -->
+			            <!-- 
+			            <div class="form-group">
+			                <label for="content">Anggota :</label>
+			                <input type="text" id="anggota.nama_anggota" onkeyup="searchAnggota();" class="form-control" />
+			            </div>
+			            
+			            <div class="form-group" id="listAnggota" style="border:1px solid #000;display:none;">
+			               	<ul id="myUL"></ul>
+			            </div> 
+			            -->
+			            <button id="btnShowData" type="button" class="btn btn-primary">Show Data</button>
+			            <a href="javascript: validateForm();" class="btn btn-success" role="button">Save</a>
+			            <input type="button" value="Cancel" class="btn btn-danger" onclick="doCancel();"/></form>
+           			</div>
+              	</div>
             </div>            
-            <div class="form-group">
-                <label for="content">Id Anggota :</label>
-                <input type="text" class="form-control" name="anggota.idanggota" path="anggota.idanggota" id="anggota.idanggota" />
-            </div>
-            <!-- SEARCH ID ANGGOTA -->
-            <!-- 
-            <div class="form-group">
-                <label for="content">Anggota :</label>
-                <input type="text" id="anggota.nama_anggota" onkeyup="searchAnggota();" class="form-control" />
-            </div>
-            
-            <div class="form-group" id="listAnggota" style="border:1px solid #000;display:none;">
-               	<ul id="myUL"></ul>
-            </div> 
-            -->
-            <button id="btnShowData" type="button" class="btn btn-primary">Show Data</button>
-            <a href="javascript: validateForm();" class="btn btn-success" role="button">Save</a>
-            <a id="cancel" class="btn btn-danger" role="button" onclick="doCancel();">Cancel</a>
-        </form>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer th:replace="/perpus/footer::#footer"></footer>
+        <!-- partial -->
+      </div>
+      <!-- row-offcanvas ends -->
     </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <script type="text/javascript" th:src="@{/js/chart.js}" /></script>
+  <script type="text/javascript" th:src="@{/js/dashboard.js}" /></script>
+  <script type="text/javascript" th:src="@{/js/misc.js}" /></script>
+  <script type="text/javascript" th:src="@{/js/off-canvas.js}" /></script>
 </body>
+
 </html>
