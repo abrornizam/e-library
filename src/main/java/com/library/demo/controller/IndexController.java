@@ -43,6 +43,8 @@ public class IndexController extends ResponseEntityExceptionHandler {
 				return "perpus/error-404";
 			}else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
 				return "perpus/error-500";
+			}else if(statusCode == HttpStatus.BAD_REQUEST.value()) {
+				return "perpus/error-400";
 			}
 		}
 		return "error";
