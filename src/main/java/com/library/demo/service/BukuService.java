@@ -13,9 +13,9 @@ public interface BukuService {
 
 	List<Buku> findAll();
 	
-	void saveBuku(Buku buku);
+	Buku saveBuku(Buku buku);
 	
-	void updateBuku(Buku buku);
+	void updateBuku(String kdbuku);
 	
 	void deleteBuku(String kdbuku);
 	

@@ -18,30 +18,34 @@ import com.library.demo.service.BukuService;
 @Service
 @Transactional
 public class BukuServiceImpl implements BukuService {
-
-	@Autowired
+	
 	private BukuRepository bukuRepository;
 	
+	@Autowired
+	public void setBukuRepository(BukuRepository bukuRepository) {
+		// TODO Auto-generated method stub
+		this.bukuRepository = bukuRepository;
+	}
+	
 	@Override
-	public void saveBuku(Buku buku) {
+	public Buku saveBuku(Buku buku) {
 		// TODO Auto-generated method stub
 		buku.setKdbuku("BOOK"+buku.getId());
-		System.out.println("Kode Buku : " + buku.getKdbuku());
-		buku.setStatus(true);
-		bukuRepository.save(buku);
+		buku.setStatus(true);		
+		return bukuRepository.save(buku);
 	}
 
 	@Override
-	public void updateBuku(Buku buku) {
+	public void updateBuku(String kdbuku) {
 		// TODO Auto-generated method stub
-		Buku entity = bukuRepository.findByKdbuku(buku.getKdbuku());
+		Buku entity = bukuRepository.findByKdbuku(kdbuku);
 		if(entity != null) {
-			entity.setKdbuku(buku.getKdbuku());
-			entity.setJudul(buku.getJudul());
-			entity.setDeskripsi(buku.getDeskripsi());
-			entity.setTahun(buku.getTahun());
-			entity.setJumlah(buku.getJumlah());
-			entity.setPengarang(buku.getPengarang());
+			entity.setKdbuku(entity.getKdbuku());
+			entity.setJudul(entity.getJudul());
+			entity.setDeskripsi(entity.getDeskripsi());
+			entity.setTahun(entity.getTahun());
+			entity.setJumlah(entity.getJumlah());
+			entity.setPengarang(entity.getPengarang());
 			entity.setStatus(true);
 		}
 	}

@@ -17,6 +17,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name="buku")
 public class Buku {
+
+	public Buku(int id, String kdbuku, String judul, String deskripsi, String tahun, int jumlah, Pengarang pengarang, boolean status) {
+		this.id = id;
+		this.kdbuku = kdbuku;
+		this.judul = judul;
+		this.deskripsi = deskripsi;
+		this.tahun = tahun;
+		this.jumlah = jumlah;
+		this.pengarang = pengarang;
+		this.status = status;
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

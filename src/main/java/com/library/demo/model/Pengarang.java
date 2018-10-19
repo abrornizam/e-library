@@ -20,6 +20,11 @@ import javax.persistence.Table;
 @Table(name="pengarang")
 public class Pengarang {
 
+	public Pengarang(int id, String nama_pengarang) {
+		this.id = id;
+		this.nama_pengarang = nama_pengarang;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;

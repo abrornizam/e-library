@@ -48,7 +48,7 @@ public class BukuController {
 	}
 
 	@RequestMapping(value = "/saveBuku", method = RequestMethod.POST)
-	public String saveBuku(@Valid Buku buku, BindingResult result, ModelMap model) {
+	public String saveBuku(@Valid Buku buku, BindingResult result, ModelMap model) throws Exception {
 		if (result.getErrorCount() > 0) {
 			System.out.println("ERROR MAS BRO!");
 		}
@@ -84,8 +84,8 @@ public class BukuController {
 	}
 
 	@RequestMapping(value = "/saveEditBuku", method = RequestMethod.POST)
-	public String saveEditBuku(@Valid Buku buku, ModelMap model) {
-		bukuService.updateBuku(buku);
+	public String saveEditBuku(@PathVariable String kdbuku, ModelMap model) {
+		bukuService.updateBuku(kdbuku);
 		return "redirect:/perpus/buku/listBuku";
 	}
 

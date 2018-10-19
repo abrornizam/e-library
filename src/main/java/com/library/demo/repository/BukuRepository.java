@@ -18,6 +18,8 @@ public interface BukuRepository extends JpaRepository<Buku, Integer>{
 
 	@Query(value = "select * from buku where status=true", nativeQuery=true)
 	List<Buku> findAll();
+
+	Buku findById(int id);
 	
 	Buku findByKdbuku(String kdbuku);
 
