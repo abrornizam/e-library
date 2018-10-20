@@ -13,7 +13,7 @@ public interface AnggotaService {
 
 	List<Anggota> findAll();
 	
-	void saveAnggota(Anggota anggota);
+	Anggota saveAnggota(Anggota anggota);
 	
 	void editAnggota(Anggota anggota);
 	

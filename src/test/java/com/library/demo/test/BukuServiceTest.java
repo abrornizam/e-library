@@ -1,5 +1,12 @@
+/**
+ * 
+ */
 package com.library.demo.test;
 
+/**
+ * @author ANIZAM
+ *
+ */
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.doNothing;
@@ -52,7 +59,6 @@ public class BukuServiceTest {
 	
 	@Test
 	public void shouldReturnListBuku_whenMethodListBukuCalled() throws Exception {
-		when(bukuRepository.findByKdbuku("BOOK1")).thenReturn(buku);
 		List<Buku> listBuku = new ArrayList<Buku>();
 		listBuku.add(buku);
 		when(bukuRepository.findAll()).thenReturn(listBuku);

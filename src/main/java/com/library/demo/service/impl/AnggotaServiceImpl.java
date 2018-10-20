@@ -8,7 +8,6 @@ package com.library.demo.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +19,11 @@ import com.library.demo.service.AnggotaService;
 @Transactional
 public class AnggotaServiceImpl implements AnggotaService {
 
-	@Autowired
 	private AnggotaRepository anggotaRepository;
+	
+	public void setAnggotaRepository(AnggotaRepository anggotaRepository) {
+		this.anggotaRepository = anggotaRepository;
+	}
 	
 	@Override
 	public List<Anggota> findAll() {
@@ -30,14 +32,13 @@ public class AnggotaServiceImpl implements AnggotaService {
 	}
 
 	@Override
-	public void saveAnggota(Anggota anggota) {
+	public Anggota saveAnggota(Anggota anggota) {
 		// TODO Auto-generated method stub
 		anggota.setIdanggota("USR"+anggota.getId());
-		System.out.println("Kode anggota : " + anggota.getIdanggota());
 		Date tgl = new Date();
 		anggota.setStatus(true);
 		anggota.setTgl_join(tgl);
-		anggotaRepository.save(anggota);		
+		return anggotaRepository.save(anggota);		
 	}
 	
 	@Override
