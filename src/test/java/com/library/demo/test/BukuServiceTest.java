@@ -42,9 +42,19 @@ public class BukuServiceTest {
 		
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);		
-		Pengarang pengarang = new Pengarang(1, "Abror");
-		buku = new Buku(1, "BOOK1", "Meraih Mimpi", "Desc Buku", "2018", 10, pengarang, true);		
+		MockitoAnnotations.initMocks(this);
+		Pengarang pengarang = new Pengarang();
+		pengarang.setId(1);
+		pengarang.setNama_pengarang("Abror");
+		buku = new Buku();
+		buku.setId(1);
+		buku.setKdbuku("BOOK1");
+		buku.setJudul("Meraih Mimpi");
+		buku.setDeskripsi("Desc Buku");
+		buku.setTahun("2018");
+		buku.setJumlah(10);
+		buku.setPengarang(pengarang);
+		buku.setStatus(true);
 		bukuServiceImpl = new BukuServiceImpl();
 		bukuServiceImpl.setBukuRepository(bukuRepository);
 	}
