@@ -44,7 +44,15 @@ public class AnggotaServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		anggota = new Anggota(1, "USR1", "Abror Nizam", "Jakarta", "08151xxx", "abror@email.com", new Date(), true);
+		anggota = new Anggota();
+		anggota.setId(1);
+		anggota.setIdanggota("USR1");
+		anggota.setNama_anggota("Abror Nizam");
+		anggota.setAlamat("Jakarta");
+		anggota.setNo_telp("08151xxx");
+		anggota.setEmail("abror@email.com");
+		anggota.setTgl_join(new Date());
+		anggota.setStatus(true);
 		anggotaServiceImpl = new AnggotaServiceImpl();
 		anggotaServiceImpl.setAnggotaRepository(anggotaRepository);
 	}

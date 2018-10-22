@@ -18,17 +18,6 @@ import javax.persistence.Table;
 @Table(name="anggota")
 public class Anggota {
 
-	public Anggota(int id, String idanggota, String nama_anggota, String alamat, String no_telp, String email, Date tgl_join, boolean status) {
-		this.id = id;
-		this.idanggota = idanggota;
-		this.nama_anggota = nama_anggota;
-		this.alamat = alamat;
-		this.no_telp = no_telp;
-		this.email = email;
-		this.tgl_join = tgl_join;
-		this.status = status;
-	}
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id", updatable = false, nullable = false)
