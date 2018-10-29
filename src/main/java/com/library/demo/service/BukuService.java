@@ -15,7 +15,7 @@ public interface BukuService {
 	
 	Buku saveBuku(Buku buku);
 	
-	void updateBuku(String kdbuku);
+	void updateBuku(Buku buku);
 	
 	void deleteBuku(String kdbuku);
 	

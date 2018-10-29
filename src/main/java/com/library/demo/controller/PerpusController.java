@@ -12,7 +12,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,10 +39,7 @@ public class PerpusController {
 	}
 
 	@RequestMapping(value = "/saveAnggota", method = RequestMethod.POST)
-	public String saveAnggota(@Valid Anggota anggota, BindingResult result, ModelMap model) {
-		if(result.getErrorCount() > 0) {
-			System.out.println("ERROR BRO!");
-		}
+	public String saveAnggota(@Valid Anggota anggota, ModelMap model) {
 		anggotaService.saveAnggota(anggota);		
 		return "redirect:/perpus/anggota/listAnggota";
 	}
@@ -63,10 +59,7 @@ public class PerpusController {
 	}
 	
 	@RequestMapping(value = "/saveEditAnggota", method = RequestMethod.POST)
-	public String saveEditAnggota(@Valid Anggota anggota, BindingResult result, ModelMap model) {
-		if(result.getErrorCount() > 0) {
-			System.out.println("ERROR BRO!");
-		}
+	public String saveEditAnggota(@Valid Anggota anggota, ModelMap model) {
 		anggotaService.editAnggota(anggota);
 		return "redirect:/perpus/anggota/listAnggota";
 	}

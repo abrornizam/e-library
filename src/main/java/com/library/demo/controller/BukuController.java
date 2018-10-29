@@ -84,8 +84,8 @@ public class BukuController {
 	}
 
 	@RequestMapping(value = "/saveEditBuku", method = RequestMethod.POST)
-	public String saveEditBuku(@PathVariable String kdbuku, ModelMap model) {
-		bukuService.updateBuku(kdbuku);
+	public String saveEditBuku(@Valid Buku buku, ModelMap model) {
+		bukuService.updateBuku(buku);
 		return "redirect:/perpus/buku/listBuku";
 	}
 

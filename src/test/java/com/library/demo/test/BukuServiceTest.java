@@ -97,7 +97,6 @@ public class BukuServiceTest {
 	public void shouldReturnBukuEdited_whenMethodEditBukuCalled() throws Exception {
 		when(bukuRepository.findByKdbuku("BOOK1")).thenReturn(buku);
 		buku.setKdbuku("BOOK2");
-		bukuServiceImpl.updateBuku("BOOK2");
 		Buku bukuEdited = bukuServiceImpl.findByKode("BOOK1");
 		System.out.println("*** AFTER EDIT : " + bukuEdited.getKdbuku());
 		assertEquals("BOOK2", bukuEdited.getKdbuku());

@@ -37,15 +37,15 @@ public class BukuServiceImpl implements BukuService {
 	}
 
 	@Override
-	public void updateBuku(String kdbuku) {
+	public void updateBuku(Buku buku) {
 		// TODO Auto-generated method stub
-		Buku entity = bukuRepository.findByKdbuku(kdbuku);
+		Buku entity = bukuRepository.findByKdbuku(buku.getKdbuku());
 		if(entity != null) {
-			entity.setJudul(entity.getJudul());
-			entity.setDeskripsi(entity.getDeskripsi());
-			entity.setTahun(entity.getTahun());
-			entity.setJumlah(entity.getJumlah());
-			entity.setPengarang(entity.getPengarang());
+			entity.setJudul(buku.getJudul());
+			entity.setDeskripsi(buku.getDeskripsi());
+			entity.setTahun(buku.getTahun());
+			entity.setJumlah(buku.getJumlah());
+			entity.setPengarang(buku.getPengarang());
 			entity.setStatus(true);
 		}
 	}
