@@ -30,7 +30,8 @@ public class BukuServiceImpl implements BukuService {
 	@Override
 	public Buku saveBuku(Buku buku) {
 		// TODO Auto-generated method stub
-		buku.setKdbuku("BOOK"+buku.getId());
+		int seqId = bukuRepository.getSequenceId()+1;
+		buku.setKdbuku("BOOK"+seqId);
 		buku.setStatus(true);		
 		return bukuRepository.save(buku);
 	}
@@ -40,7 +41,6 @@ public class BukuServiceImpl implements BukuService {
 		// TODO Auto-generated method stub
 		Buku entity = bukuRepository.findByKdbuku(kdbuku);
 		if(entity != null) {
-			entity.setKdbuku(entity.getKdbuku());
 			entity.setJudul(entity.getJudul());
 			entity.setDeskripsi(entity.getDeskripsi());
 			entity.setTahun(entity.getTahun());

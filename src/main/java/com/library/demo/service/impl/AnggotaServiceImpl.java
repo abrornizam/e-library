@@ -35,8 +35,9 @@ public class AnggotaServiceImpl implements AnggotaService {
 
 	@Override
 	public Anggota saveAnggota(Anggota anggota) {
-		// TODO Auto-generated method stub
-		anggota.setIdanggota("USR"+anggota.getId());
+		// TODO Auto-generated method stub		
+		int seqId = anggotaRepository.getSequenceId()+1;
+		anggota.setIdanggota("USR"+seqId);
 		Date tgl = new Date();
 		anggota.setStatus(true);
 		anggota.setTgl_join(tgl);

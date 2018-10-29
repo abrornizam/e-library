@@ -16,7 +16,7 @@ import com.library.demo.model.Buku;
 @Repository
 public interface BukuRepository extends JpaRepository<Buku, Integer>{
 
-	@Query(value = "select * from buku where status=true", nativeQuery=true)
+	@Query(value = "select * from buku where status=true", nativeQuery = true)
 	List<Buku> findAll();
 
 	Buku findById(int id);
@@ -24,4 +24,7 @@ public interface BukuRepository extends JpaRepository<Buku, Integer>{
 	Buku findByKdbuku(String kdbuku);
 
 	Buku findByTahun(String tahun);
+	
+	@Query(value = "select max(id) from buku", nativeQuery = true)
+	int getSequenceId();
 }

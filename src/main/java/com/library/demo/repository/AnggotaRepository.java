@@ -20,5 +20,8 @@ public interface AnggotaRepository extends JpaRepository<Anggota, Integer>{
 	List<Anggota> findAll();
 	
 	Anggota findByIdanggota(String idanggota);
+	
+	@Query(value = "select max(id) from anggota", nativeQuery = true)
+	int getSequenceId();
 
 }
