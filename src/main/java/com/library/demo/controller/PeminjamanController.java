@@ -1,5 +1,7 @@
 package com.library.demo.controller;
 
+import java.util.Date;
+
 /**
  * @author ANIZAM
  *
@@ -12,6 +14,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,19 +53,28 @@ public class PeminjamanController {
     @RequestMapping(value = "/pinjamBuku/{kdbuku}", method = RequestMethod.GET)
     public String pinjamBuku(@PathVariable String kdbuku, ModelMap model) {
     	Buku buku = bukuService.findByKode(kdbuku);
-    	List<Peminjaman> peminjaman = peminjamanService.findAll();
     	List<Anggota> anggota = anggotaService.findAll();
     	model.addAttribute("buku", buku);
     	model.addAttribute("anggota", anggota);
-    	model.addAttribute("peminjaman", peminjaman);
     	return "/perpus/buku/pinjamBuku";
     }
     
     @RequestMapping(value = "/savePinjamBuku", method = RequestMethod.POST)
-    public String savePinjamBuku(@Valid Peminjaman peminjaman, ModelMap model) {
-    	Peminjaman p = peminjamanService.savePeminjaman(peminjaman);
+    public String savePinjamBuku(@Valid Peminjaman peminjaman, BindingResult result, ModelMap model) {
+    	if(result.getErrorCount() > 0) {
+    		System.out.println("*** ERROR BRO!");
+    	}
+    	Anggota a = anggotaService.findByIdanggota(peminjaman.getAnggota().getIdanggota());
     	Buku b = bukuService.findByKode(peminjaman.getBuku().getKdbuku());
-    	int totalDipinjam = p.getJumlah();
+    	peminjaman.setKdpeminjaman("TRX"+peminjaman.getId());
+    	peminjaman.setAnggota(a);
+    	peminjaman.setBuku(b);
+		Date tgl_pinjam = new Date();
+		peminjaman.setTgl_pinjam(tgl_pinjam);
+		peminjaman.setStatus_peminjaman("IN PROGRESS");
+		peminjaman.setStatus(true);    	
+		peminjamanService.savePeminjaman(peminjaman);
+    	int totalDipinjam = peminjaman.getJumlah();
     	int totalBuku = b.getJumlah();
     	totalBuku = totalBuku - totalDipinjam;
     	bukuService.updateJumlahBuku(b.getKdbuku(), totalBuku);

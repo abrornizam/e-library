@@ -57,7 +57,7 @@ public class Peminjaman {
 	}
 	
 	@ManyToOne
-	@JoinColumn(name="id_peminjam", nullable=false)
+	@JoinColumn(name="id_anggota", nullable=false)
 	private Anggota anggota;
 
 	public Anggota getAnggota() {

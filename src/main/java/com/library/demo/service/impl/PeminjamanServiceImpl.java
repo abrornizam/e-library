@@ -16,7 +16,6 @@ import com.library.demo.model.Peminjaman;
 import com.library.demo.repository.AnggotaRepository;
 import com.library.demo.repository.BukuRepository;
 import com.library.demo.repository.PeminjamanRepository;
-import com.library.demo.service.AnggotaService;
 import com.library.demo.service.PeminjamanService;
 
 @Service
@@ -32,9 +31,6 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 	@Autowired
 	AnggotaRepository peminjamRepository;
 
-	@Autowired
-	AnggotaService peminjamService;
-
 	@Override
 	public List<Peminjaman> findAll() {
 		// TODO Auto-generated method stub
@@ -44,14 +40,13 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 	@Override
 	public Peminjaman savePeminjaman(Peminjaman peminjaman) {
 		// TODO Auto-generated method stub
-		peminjaman.setKdpeminjaman("TRX"+peminjaman.getId());
-		Date tgl_pinjam = new Date();		
-		peminjaman.setTgl_pinjam(tgl_pinjam);
-		peminjaman.setStatus_peminjaman("IN PROGRESS");
-		peminjaman.setStatus(true);
+//		peminjaman.setKdpeminjaman("TRX"+peminjaman.getId());
+//		Date tgl_pinjam = new Date();
+//		peminjaman.setTgl_pinjam(tgl_pinjam);
+//		peminjaman.setStatus_peminjaman("IN PROGRESS");
+//		peminjaman.setStatus(true);	
 		return peminjamanRepository.save(peminjaman);
-	}
-	
+	}	
 
 	@Override
 	public Peminjaman findByKdpeminjaman(String kdpeminjaman) {

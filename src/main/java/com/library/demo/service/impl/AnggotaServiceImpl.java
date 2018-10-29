@@ -8,6 +8,7 @@ package com.library.demo.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class AnggotaServiceImpl implements AnggotaService {
 
 	private AnggotaRepository anggotaRepository;
 	
+	@Autowired
 	public void setAnggotaRepository(AnggotaRepository anggotaRepository) {
 		this.anggotaRepository = anggotaRepository;
 	}
