@@ -23,6 +23,11 @@ public interface PeminjamanRepository extends JpaRepository<Peminjaman, Integer>
 	@Query(value = "select * from peminjaman where status=true", nativeQuery=true)
 	List<Peminjaman> findAll();
 	
+	Peminjaman findById(int id);
+	
 	Peminjaman findByKdpeminjaman(String kdpeminjaman);
+	
+	@Query(value = "select max(id) from peminjaman", nativeQuery=true)
+	int getSequenceId();
 
 }

@@ -29,7 +29,7 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 	BukuRepository bukuRepository;
 
 	@Autowired
-	AnggotaRepository peminjamRepository;
+	AnggotaRepository anggotaRepository;
 
 	@Override
 	public List<Peminjaman> findAll() {
@@ -40,11 +40,14 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 	@Override
 	public Peminjaman savePeminjaman(Peminjaman peminjaman) {
 		// TODO Auto-generated method stub
-//		peminjaman.setKdpeminjaman("TRX"+peminjaman.getId());
-//		Date tgl_pinjam = new Date();
-//		peminjaman.setTgl_pinjam(tgl_pinjam);
-//		peminjaman.setStatus_peminjaman("IN PROGRESS");
-//		peminjaman.setStatus(true);	
+		int seqId = peminjamanRepository.getSequenceId()+1;    	
+    	peminjaman.setId(seqId);
+    	String kdpeminjaman = Integer.valueOf(seqId).toString();
+    	peminjaman.setKdpeminjaman("TRX".concat(kdpeminjaman));
+    	Date tgl_pinjam = new Date();
+		peminjaman.setTgl_pinjam(tgl_pinjam);
+		peminjaman.setStatus_peminjaman("IN PROGRESS");
+		peminjaman.setStatus(true);
 		return peminjamanRepository.save(peminjaman);
 	}	
 
@@ -92,6 +95,27 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 			denda = 5000;
 		}
 		return denda;
+	}
+
+	@Override
+	public boolean isAlreadyBorrow(int idanggota) {
+		// TODO Auto-generated method stub
+		int idfound = 0;
+		String status = "";
+		List<Peminjaman> listPeminjaman = peminjamanRepository.findAll();
+		for(Peminjaman peminjaman : listPeminjaman) {
+			idfound = peminjaman.getAnggota().getId();
+			status = peminjaman.getStatus_peminjaman();
+			if(idanggota == idfound && !status.equalsIgnoreCase("FINISH")) {
+				break;
+			}
+		}
+		
+		if(idanggota == idfound && !status.equalsIgnoreCase("FINISH")) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 }

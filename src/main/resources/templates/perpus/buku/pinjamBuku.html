@@ -25,7 +25,7 @@
 		var jumlah_buku = document.getElementById("buku.jumlah").value;    		
 		    		
 		if(jumlah_pinjam > jumlah_buku){    			
-  		window.alert("Jumlah Pinjam Buku Melebihi Jumlah Buku!");
+  		window.alert("Total book borrowed is not enough!");
 	  	}else{
 	  		form.method = "post";
 	  		form.action = "/perpus/peminjaman/savePinjamBuku";
@@ -33,10 +33,9 @@
 	  		form.submit();
 	  	}
 	}
-	
+
 	function doCancel(){
-  		var btnCancel = document.getElementById("cancel");	    	
-  		btnCancel.setAttribute("href","/perpus/buku/listBuku");
+  		window.location.href = '/perpus/buku/listBuku';
   	}    	
 	
 	$(document).ready(function(){			   				
@@ -143,8 +142,8 @@
 			            </div> 
 			            -->
 			            <a href="javascript: validateForm();" class="btn btn-success" role="button">Save</a>
-			            </form>
 			            <input type="button" value="Cancel" class="btn btn-danger" onclick="doCancel();"/>
+			            </form>			            
            			</div>
               	</div>
             </div>            

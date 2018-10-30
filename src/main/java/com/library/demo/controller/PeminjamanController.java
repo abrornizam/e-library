@@ -1,7 +1,5 @@
 package com.library.demo.controller;
 
-import java.util.Date;
-
 /**
  * @author ANIZAM
  *
@@ -14,7 +12,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.library.demo.model.Anggota;
 import com.library.demo.model.Buku;
 import com.library.demo.model.Peminjaman;
+import com.library.demo.repository.PeminjamanRepository;
 import com.library.demo.repository.PengarangRepository;
 import com.library.demo.service.AnggotaService;
 import com.library.demo.service.BukuService;
@@ -39,6 +37,9 @@ public class PeminjamanController {
 	
 	@Autowired
 	PeminjamanService peminjamanService;
+	
+	@Autowired
+	PeminjamanRepository peminjamanRepository;
 	
 	@Autowired
 	PengarangRepository pengarangRepository;
@@ -60,26 +61,23 @@ public class PeminjamanController {
     }
     
     @RequestMapping(value = "/savePinjamBuku", method = RequestMethod.POST)
-    public String savePinjamBuku(@Valid Peminjaman peminjaman, BindingResult result, ModelMap model) {
-    	if(result.getErrorCount() > 0) {
-    		System.out.println("*** ERROR BRO!");
-    	}
-    	Anggota a = anggotaService.findByIdanggota(peminjaman.getAnggota().getIdanggota());
-    	Buku b = bukuService.findByKode(peminjaman.getBuku().getKdbuku());
-    	peminjaman.setKdpeminjaman("TRX"+peminjaman.getId());
-    	peminjaman.setAnggota(a);
-    	peminjaman.setBuku(b);
-		Date tgl_pinjam = new Date();
-		peminjaman.setTgl_pinjam(tgl_pinjam);
-		peminjaman.setStatus_peminjaman("IN PROGRESS");
-		peminjaman.setStatus(true);    	
-		peminjamanService.savePeminjaman(peminjaman);
-    	int totalDipinjam = peminjaman.getJumlah();
-    	int totalBuku = b.getJumlah();
-    	totalBuku = totalBuku - totalDipinjam;
-    	bukuService.updateJumlahBuku(b.getKdbuku(), totalBuku);
-    	return "redirect:/perpus/buku/listBuku";
-    } 
+    public String savePinjamBuku(@Valid Peminjaman peminjaman, ModelMap model) {
+    	Anggota anggota = anggotaService.findByIdanggota(peminjaman.getAnggota().getIdanggota());
+    	Buku buku = bukuService.findByKode(peminjaman.getBuku().getKdbuku());
+    	peminjaman.setAnggota(anggota);
+    	peminjaman.setBuku(buku);
+		if(peminjamanService.isAlreadyBorrow(peminjaman.getAnggota().getId())) {
+			model.addAttribute("msg", "You already borrowed another book ! Please back it first !");
+			return "redirect:/perpus/peminjaman/pinjamBuku/"+buku.getKdbuku();
+		}else {
+			peminjamanService.savePeminjaman(peminjaman);
+			int totalDipinjam = peminjaman.getJumlah();
+	    	int totalBuku = buku.getJumlah();
+	    	totalBuku = totalBuku - totalDipinjam;
+	    	bukuService.updateJumlahBuku(buku.getKdbuku(), totalBuku);	
+		}
+		return "redirect:/perpus/buku/listBuku";		
+    }
     
     @RequestMapping(value = "/detailPeminjaman/{kdpeminjaman}", method = RequestMethod.GET)
     public String detailPeminjaman(@PathVariable String kdpeminjaman, ModelMap model) {

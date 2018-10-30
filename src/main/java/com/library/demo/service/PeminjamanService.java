@@ -25,4 +25,6 @@ public interface PeminjamanService {
 		
 	void deletePeminjaman(String kdpeminjaman);
 	
+	boolean isAlreadyBorrow(int idanggota);
+	
 }
