@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.library.demo.model.Anggota;
 import com.library.demo.model.Buku;
+import com.library.demo.model.Denda;
 import com.library.demo.model.Peminjaman;
 import com.library.demo.repository.PeminjamanRepository;
 import com.library.demo.repository.PengarangRepository;
 import com.library.demo.service.AnggotaService;
 import com.library.demo.service.BukuService;
+import com.library.demo.service.DendaService;
 import com.library.demo.service.PeminjamanService;
 
 @Controller
@@ -37,6 +39,9 @@ public class PeminjamanController {
 	
 	@Autowired
 	PeminjamanService peminjamanService;
+	
+	@Autowired
+	DendaService dendaService;
 	
 	@Autowired
 	PeminjamanRepository peminjamanRepository;
@@ -101,8 +106,20 @@ public class PeminjamanController {
     @RequestMapping(value = "/fund/{kdpeminjaman}", method = RequestMethod.GET)
     public String fundPeminjaman(@PathVariable String kdpeminjaman) {
     	peminjamanService.fundPeminjaman(kdpeminjaman);
-    	peminjamanService.lamaPeminjaman(kdpeminjaman);
-    	peminjamanService.denda(kdpeminjaman);
+    	int lamaPinjam = peminjamanService.lamaPeminjaman(kdpeminjaman);
+    	if(lamaPinjam > 5) {
+    		return "redirect:/perpus/peminjaman/denda/"+kdpeminjaman;
+    	}
+    	return "redirect:/perpus/peminjaman/listPeminjaman";
+    }
+    
+    @RequestMapping(value = "/denda/{kdpeminjaman}", method = RequestMethod.GET)
+    public String dendaPeminjaman(@Valid Denda denda, @PathVariable String kdpeminjaman) {
+    	Peminjaman p = peminjamanService.findByKdpeminjaman(kdpeminjaman);
+    	int nominalDenda = peminjamanService.denda(kdpeminjaman);
+    	denda.setPeminjaman(p);
+    	denda.setNominal(nominalDenda);
+    	dendaService.saveDenda(denda);
     	return "redirect:/perpus/peminjaman/listPeminjaman";
     }
     

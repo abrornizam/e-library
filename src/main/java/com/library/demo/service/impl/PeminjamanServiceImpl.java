@@ -141,6 +141,10 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 		int lamaPinjam = lamaPeminjaman(kdpeminjaman);
 		if(lamaPinjam > 5) {			
 			denda = 5000;
+		}else if(lamaPinjam > 10) {
+			denda = 10000;
+		}else {
+			denda = 25000;
 		}
 		return denda;
 	}
