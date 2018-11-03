@@ -101,7 +101,8 @@ public class PeminjamanController {
     @RequestMapping(value = "/fund/{kdpeminjaman}", method = RequestMethod.GET)
     public String fundPeminjaman(@PathVariable String kdpeminjaman) {
     	peminjamanService.fundPeminjaman(kdpeminjaman);
-    	System.out.println("NILAI DENDA : " + peminjamanService.denda(kdpeminjaman));
+    	peminjamanService.lamaPeminjaman(kdpeminjaman);
+    	peminjamanService.denda(kdpeminjaman);
     	return "redirect:/perpus/peminjaman/listPeminjaman";
     }
     

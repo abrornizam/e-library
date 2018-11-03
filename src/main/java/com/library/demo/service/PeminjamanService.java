@@ -20,11 +20,13 @@ public interface PeminjamanService {
 	void acceptPeminjaman(String kdpeminjaman);
 	
 	void fundPeminjaman(String kdpeminjaman);
-	
-	int denda(String kdpeminjaman);
 		
 	void deletePeminjaman(String kdpeminjaman);
 	
 	boolean isAlreadyBorrow(int idanggota);
+	
+	int lamaPeminjaman(String kdpeminjaman);
+	
+	int denda(String kdpeminjaman);
 	
 }

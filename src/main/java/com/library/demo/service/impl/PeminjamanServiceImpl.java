@@ -1,5 +1,8 @@
 package com.library.demo.service.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 /**
  * @author ANIZAM
  *
@@ -83,18 +86,9 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 		Peminjaman entity = peminjamanRepository.findByKdpeminjaman(kdpeminjaman);
 		if(entity.getStatus_peminjaman().equals("APPROVED")) {
 			entity.setStatus_peminjaman("FINISH");
+			Date tgl_kembali = new Date();
+			entity.setTgl_kembali(tgl_kembali);
 		}
-	}
-
-	@Override
-	public int denda(String kdpeminjaman) {
-		// TODO Auto-generated method stub
-		int denda = 0;
-		int lamaPinjam = 5;
-		if(lamaPinjam > 3) {
-			denda = 5000;
-		}
-		return denda;
 	}
 
 	@Override
@@ -116,6 +110,39 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 		}else {
 			return false;
 		}
+	}	
+	
+	@Override
+	public int lamaPeminjaman(String kdpeminjaman) {
+		// TODO Auto-generated method stub
+		Peminjaman p = peminjamanRepository.findByKdpeminjaman(kdpeminjaman);
+		Date tglPinjam = p.getTgl_pinjam();
+		Date tglKembali = p.getTgl_kembali();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String tglPeminjaman = dateFormat.format(tglPinjam);
+		String tglPengembalian = dateFormat.format(tglKembali);
+		int tglP = Integer.parseInt(tglPeminjaman.substring(8, 10));
+		int bulanP = Integer.parseInt(tglPeminjaman.substring(5, 7));
+		int tahunP = Integer.parseInt(tglPeminjaman.substring(0, 4));
+		int tglK = Integer.parseInt(tglPengembalian.substring(8, 10));
+		int bulanK = Integer.parseInt(tglPengembalian.substring(5, 7));
+		int tahunK = Integer.parseInt(tglPengembalian.substring(0, 4));
+		int hari = tglK - tglP;
+		int bulan = (bulanK - bulanP) * 30;
+		int tahun = (tahunK - tahunP) * 365;
+		int lamaPinjam = hari + bulan + tahun;
+		return lamaPinjam;
+	}
+	
+	@Override
+	public int denda(String kdpeminjaman) {
+		// TODO Auto-generated method stub
+		int denda = 0;
+		int lamaPinjam = lamaPeminjaman(kdpeminjaman);
+		if(lamaPinjam > 5) {			
+			denda = 5000;
+		}
+		return denda;
 	}
 
 }
