@@ -18,14 +18,22 @@
   	function callMe(field) {
 	  	field.value;
 	}
-	
+  	
+  	window.onload = function(){
+	  	var isBorrow = document.getElementById('isBorrow').value;
+	  	console.log("IS BORROW : " + isBorrow);
+	  	if(isBorrow == "true"){
+	  		window.alert("You can't borrow this book because you already borrow other book ! Please back it first !");
+	  	}
+  	}
+	  	
 	function validateForm(){
 		var form = document.getElementById("myForm");    		
 		var jumlah_pinjam = document.getElementById("jumlah").value;
-		var jumlah_buku = document.getElementById("buku.jumlah").value;    		
-		    		
+		var jumlah_buku = document.getElementById("buku.jumlah").value;
+		
 		if(jumlah_pinjam > jumlah_buku){    			
-  		window.alert("Total book borrowed is not enough!");
+  			window.alert("Total book borrowed is not enough!");
 	  	}else{
 	  		form.method = "post";
 	  		form.action = "/perpus/peminjaman/savePinjamBuku";
@@ -110,6 +118,8 @@
 	                  <h4 class="card-title">Borrow Book</h4>
 		              <form id="myForm" class="form-sample" action="/perpus/peminjaman/savePinjamBuku" th:action="@{/perpus/peminjaman/savePinjamBuku}" method="post">  
 			        	<input th:type="hidden" name="id" path="id" id="id"/>
+			        	<input th:type="hidden" th:if="${msg == true}" th:value="true" id="isBorrow"/>
+			            <input th:type="hidden" th:unless="${msg == true}" th:value="false" id="isBorrow"/>
 			        	<div class="form-group">
 			                <label for="content">Book Code :</label>
 			                <input type="text" class="form-control" name="buku.kdbuku" path="buku.kdbuku" id="buku.kdbuku" th:value="${buku.kdbuku}" readonly/>                

@@ -12,9 +12,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.library.demo.model.Anggota;
 import com.library.demo.model.Buku;
@@ -66,13 +68,15 @@ public class PeminjamanController {
     }
     
     @RequestMapping(value = "/savePinjamBuku", method = RequestMethod.POST)
-    public String savePinjamBuku(@Valid Peminjaman peminjaman, ModelMap model) {
+    public String savePinjamBuku(@Valid Peminjaman peminjaman, BindingResult result, RedirectAttributes red, ModelMap model) {
     	Anggota anggota = anggotaService.findByIdanggota(peminjaman.getAnggota().getIdanggota());
     	Buku buku = bukuService.findByKode(peminjaman.getBuku().getKdbuku());
     	peminjaman.setAnggota(anggota);
     	peminjaman.setBuku(buku);
-		if(peminjamanService.isAlreadyBorrow(peminjaman.getAnggota().getId())) {
-			model.addAttribute("msg", "You already borrowed another book ! Please back it first !");
+    	Boolean isBorrow = peminjamanService.isAlreadyBorrow(peminjaman.getAnggota().getId());
+		if(result.getErrorCount() > 0 && isBorrow == true) {
+	    	red.addFlashAttribute("msg", isBorrow);
+	    	model.addAttribute("msg", isBorrow);
 			return "redirect:/perpus/peminjaman/pinjamBuku/"+buku.getKdbuku();
 		}else {
 			peminjamanService.savePeminjaman(peminjaman);
