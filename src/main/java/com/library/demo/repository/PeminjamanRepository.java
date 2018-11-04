@@ -27,6 +27,9 @@ public interface PeminjamanRepository extends JpaRepository<Peminjaman, Integer>
 	
 	Peminjaman findByKdpeminjaman(String kdpeminjaman);
 	
+	@Query(value = "select count(id) from pemijaman", nativeQuery = true)
+	int getTotalData();
+	
 	@Query(value = "select max(id) from peminjaman", nativeQuery=true)
 	int getSequenceId();
 

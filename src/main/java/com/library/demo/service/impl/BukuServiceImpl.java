@@ -30,7 +30,14 @@ public class BukuServiceImpl implements BukuService {
 	@Override
 	public Buku saveBuku(Buku buku) {
 		// TODO Auto-generated method stub
-		int seqId = bukuRepository.getSequenceId()+1;
+		int totalData = bukuRepository.getTotalData();
+		int seqId = 0;	
+		if(totalData == 0) {
+			seqId = 1;
+		}else {
+			seqId = bukuRepository.getSequenceId()+1;
+		}
+		buku.setId(seqId);
 		buku.setKdbuku("BOOK"+seqId);
 		buku.setStatus(true);		
 		return bukuRepository.save(buku);

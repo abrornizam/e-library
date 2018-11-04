@@ -43,8 +43,14 @@ public class PeminjamanServiceImpl implements PeminjamanService {
 	@Override
 	public Peminjaman savePeminjaman(Peminjaman peminjaman) {
 		// TODO Auto-generated method stub
-		int seqId = peminjamanRepository.getSequenceId()+1;    	
-    	peminjaman.setId(seqId);
+		int totalData = peminjamanRepository.getTotalData();
+		int seqId = 0;	
+		if(totalData == 0) {
+			seqId = 1;
+		}else {
+			seqId = peminjamanRepository.getSequenceId()+1;
+		}
+		peminjaman.setId(seqId);
     	String kdpeminjaman = Integer.valueOf(seqId).toString();
     	peminjaman.setKdpeminjaman("TRX".concat(kdpeminjaman));
     	Date tgl_pinjam = new Date();

@@ -21,6 +21,9 @@ public interface AnggotaRepository extends JpaRepository<Anggota, Integer>{
 	
 	Anggota findByIdanggota(String idanggota);
 	
+	@Query(value = "select count(id) from anggota", nativeQuery = true)
+	int getTotalData();
+	
 	@Query(value = "select max(id) from anggota", nativeQuery = true)
 	int getSequenceId();
 

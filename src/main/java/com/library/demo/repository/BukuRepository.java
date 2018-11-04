@@ -25,6 +25,9 @@ public interface BukuRepository extends JpaRepository<Buku, Integer>{
 
 	Buku findByTahun(String tahun);
 	
+	@Query(value = "select count(id) from buku", nativeQuery = true)
+	int getTotalData();
+	
 	@Query(value = "select max(id) from buku", nativeQuery = true)
 	int getSequenceId();
 }
