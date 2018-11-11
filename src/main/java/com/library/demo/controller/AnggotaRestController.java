@@ -8,13 +8,14 @@ package com.library.demo.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,37 +24,44 @@ import com.library.demo.service.AnggotaService;
 
 @RestController
 @RequestMapping("/rest/perpus/anggota")
-public class AnggotaController {
+public class AnggotaRestController {
 
 	@Autowired
 	AnggotaService anggotaService;
 	
-	@RequestMapping(value = "/listAnggota", method = RequestMethod.GET)
+	@GetMapping(value = "/listAnggota")
     public @ResponseBody List<Anggota> listAnggota(HttpServletResponse response) {
     	response.setContentType("application/json");
     	response.setStatus(200);
     	return anggotaService.findAll();
     }
 	
-	@RequestMapping(value = "/saveAnggota", method = RequestMethod.POST)
+	@PostMapping(value = "/saveAnggota")
 	public @ResponseBody void saveAnggota(@RequestBody Anggota anggota, HttpServletResponse response) {
 		response.setContentType("application/json");
     	response.setStatus(200);
 		anggotaService.saveAnggota(anggota);
 	}
 	
-	@RequestMapping(value = "/detail/{idanggota}", method = RequestMethod.GET)
-	public @ResponseBody void detailAnggota(@PathVariable String idanggota, HttpServletResponse response) {
+	@GetMapping(value = "/detail/{idanggota}")
+	public @ResponseBody Anggota detailAnggota(@PathVariable String idanggota, HttpServletResponse response) {
 		response.setContentType("application/json");
 		response.setStatus(200);
-		anggotaService.findByIdanggota(idanggota);
+		return anggotaService.findByIdanggota(idanggota);
 	}
 	
-	@RequestMapping(value = "/delete/{idanggota}", method = RequestMethod.GET)
-	public @ResponseBody void deleteAnggota(@Valid Anggota anggota, @PathVariable String idanggota, HttpServletResponse response) {
+	@PutMapping(value = "/edit/{idanggota}")
+	public @ResponseBody void editAnggota(@RequestBody Anggota anggota, HttpServletResponse response) {
 		response.setContentType("application/json");
 		response.setStatus(200);
-		anggotaService.deleteAnggota(anggota.getIdanggota());
+		anggotaService.editAnggota(anggota);
+	}
+	
+	@GetMapping(value = "/delete/{idanggota}")
+	public @ResponseBody void deleteAnggota(@PathVariable String idanggota, HttpServletResponse response) {
+		response.setContentType("application/json");
+		response.setStatus(200);
+		anggotaService.deleteAnggota(idanggota);
 	}
 	
 }

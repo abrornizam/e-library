@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="buku")
 public class Buku {
@@ -85,6 +87,7 @@ public class Buku {
 		this.jumlah = jumlah;
 	}
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="id_pengarang", nullable=false)
 	private Pengarang pengarang;

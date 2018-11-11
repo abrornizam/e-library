@@ -20,6 +20,7 @@ import com.library.demo.service.AnggotaService;
 @Transactional
 public class AnggotaServiceImpl implements AnggotaService {
 
+	@Autowired
 	private AnggotaRepository anggotaRepository;
 	
 	@Autowired
