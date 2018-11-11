@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.abror.demo</groupId>
-	<artifactId>library-demo</artifactId>
+	<artifactId>elibrary-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>library-demo</name>
+	<name>elibrary-demo</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>

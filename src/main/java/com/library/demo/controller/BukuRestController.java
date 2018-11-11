@@ -39,7 +39,7 @@ public class BukuRestController {
 	@GetMapping(value = "/listBuku")
 	public @ResponseBody List<Buku> listBuku(HttpServletResponse response) {
 		response.setContentType("application/json");
-    	response.setStatus(200);
+		response.setStatus(200);
 		return bukuService.findAll();
 	}
 	

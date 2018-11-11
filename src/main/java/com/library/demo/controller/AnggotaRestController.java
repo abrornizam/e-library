@@ -30,16 +30,16 @@ public class AnggotaRestController {
 	AnggotaService anggotaService;
 	
 	@GetMapping(value = "/listAnggota")
-    public @ResponseBody List<Anggota> listAnggota(HttpServletResponse response) {
+	public @ResponseBody List<Anggota> listAnggota(HttpServletResponse response)  {
     	response.setContentType("application/json");
     	response.setStatus(200);
     	return anggotaService.findAll();
     }
 	
-	@PostMapping(value = "/saveAnggota")
+	@PostMapping(value = "/save")
 	public @ResponseBody void saveAnggota(@RequestBody Anggota anggota, HttpServletResponse response) {
 		response.setContentType("application/json");
-    	response.setStatus(200);
+		response.setStatus(200);
 		anggotaService.saveAnggota(anggota);
 	}
 	
