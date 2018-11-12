@@ -1,5 +1,7 @@
 package com.library.demo.repository;
 
+import java.util.List;
+
 /**
  * @author ANIZAM
  *
@@ -13,5 +15,6 @@ import com.library.demo.model.Pengarang;
 @Repository
 public interface PengarangRepository extends JpaRepository<Pengarang, Integer>{
 	
+	List<Pengarang> findAll();
 	
 }
