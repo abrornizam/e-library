@@ -1,19 +1,10 @@
 package com.library.demo.model;
 
-/**
- * @author ANIZAM
- *
- */
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,17 +21,6 @@ public class Pengarang {
 	
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	@OneToMany(mappedBy = "pengarang")
-	private List<Buku> listBuku = new ArrayList<>();
-
-	public List<Buku> getListBuku() {
-		return listBuku;
-	}
-
-	public void setListBuku(List<Buku> listBuku) {
-		this.listBuku = listBuku;
 	}
 	
 	@Column(name="nama_pengarang")

@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library.demo.model.Buku;
-import com.library.demo.repository.PengarangRepository;
 import com.library.demo.service.BukuService;
+import com.library.demo.service.PengarangService;
 
 /**
  * @author ANIZAM
@@ -34,7 +34,7 @@ public class BukuRestController {
 	BukuService bukuService;
 	
 	@Autowired
-	PengarangRepository pengarangRepository;
+	PengarangService pengarangService;
 	
 	@GetMapping(value = "/listBuku")
 	public @ResponseBody List<Buku> listBuku(HttpServletResponse response) {
