@@ -22,8 +22,6 @@ import com.library.demo.model.Anggota;
 import com.library.demo.model.Buku;
 import com.library.demo.model.Denda;
 import com.library.demo.model.Peminjaman;
-import com.library.demo.repository.PeminjamanRepository;
-import com.library.demo.repository.PengarangRepository;
 import com.library.demo.service.AnggotaService;
 import com.library.demo.service.BukuService;
 import com.library.demo.service.DendaService;
@@ -44,12 +42,6 @@ public class PeminjamanController {
 	
 	@Autowired
 	DendaService dendaService;
-	
-	@Autowired
-	PeminjamanRepository peminjamanRepository;
-	
-	@Autowired
-	PengarangRepository pengarangRepository;
 	
 	@RequestMapping(value = "/listPeminjaman", method = RequestMethod.GET)
     public String listPeminjaman(ModelMap model) {

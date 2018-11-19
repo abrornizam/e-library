@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,7 +58,7 @@ public class AnggotaRestController {
 		anggotaService.editAnggota(anggota);
 	}
 	
-	@GetMapping(value = "/delete/{idanggota}")
+	@DeleteMapping(value = "/delete/{idanggota}")
 	public @ResponseBody void deleteAnggota(@PathVariable String idanggota, HttpServletResponse response) {
 		response.setContentType("application/json");
 		response.setStatus(200);
