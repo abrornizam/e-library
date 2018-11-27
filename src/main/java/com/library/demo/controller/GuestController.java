@@ -25,4 +25,9 @@ public class GuestController {
 	public String detailBuku() {
 		return "perpus/guest/bookDetail";
 	}
+	
+	@GetMapping(value = "/borrow/{kdbuku}")
+	public String transaction() {
+		return "perpus/guest/bookBorrow";
+	}
 }
