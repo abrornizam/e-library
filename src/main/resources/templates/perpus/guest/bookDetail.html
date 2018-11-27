@@ -40,7 +40,7 @@
 				field += '<h4 class="card-title">Detail of Book</h4>';	
 				field += '<div class="form-group">';
 				field += '<label for="content">Book Code :</label>';
-				field += '<input type="text" class="form-control" value="'+kdbuku+'" readonly/>';
+				field += '<input type="text" class="form-control" id="kdbuku" value="'+kdbuku+'" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Title :</label>';
@@ -62,11 +62,21 @@
 				field += '<label for="content">Author :</label>';
 				field += '<input type="text" class="form-control" value="'+judul+'" readonly/>';
 				field += '</div>';
+				field += '<input type="button" value="Borrow" class="btn btn-success" />';
 				$(".card-body").append(field);
   			},
   			error: function(data){
   				console.log("ERROR GAN!");
   			}
+  		});
+  	});
+  	
+  	$(function(){
+  		$(".btn-success").ready(function(){
+  			$(document).on('click', '.btn-success', function(){
+  				var kdbuku = $("#kdbuku").attr("value");
+  				window.location = "/perpus/guest/borrow/"+kdbuku;
+  			});
   		});
   	});
   	
