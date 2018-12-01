@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>E-Library :: Indonesia</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
+  <!-- endinject -->
+  <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>  
+  <script type="text/javascript">
+  	function callMe(field) {
+	  	field.value;
+	}
+  	
+  	window.onload = function(){
+	  	var isBorrow = document.getElementById('isBorrow').value;
+	  	console.log("IS BORROW : " + isBorrow);
+	  	if(isBorrow == "true"){
+	  		window.alert("You can't borrow this book because you already borrow other book ! Please back it first !");
+	  	}
+  	}
+	  	
+	function validateForm(){
+		var form = document.getElementById("myForm");    		
+		var availability_pinjam = document.getElementById("total").value;
+		var availability_buku = document.getElementById("book.availability").value;
+		
+		if(availability_pinjam > availability_buku){    			
+  			window.alert("Total book borrowed is not enough!");
+	  	}else{
+	  		form.method = "post";
+	  		form.action = "/library/transaction/saveBorrow";
+	  		document.body.appendChild(form);        		
+	  		form.submit();
+	  	}
+	}
+
+	function doCancel(){
+  		window.location.href = '/library/book/listBook';
+  	}    	
+	
+	$(document).ready(function(){			   				
+		$.ajax({
+			type: "get",   					
+			url: "/rest/library/member/listMember",
+			dataType: "json",
+			contentType: "application/json",
+			success: function(data){
+				var list = document.getElementById("myUL");
+				var result = document.getElementById("result");
+				var resultData = JSON.parse(JSON.stringify(data));
+				for(i=0; i<resultData.length; i++){
+					var li = document.createElement("li");
+					var result = document.createElement("a");
+					var idmember = resultData[i].idmember;
+  						var name = resultData[i].name;
+  						list.appendChild(li);
+  						li.appendChild(result);
+  						hasil.innerHTML = name;
+				}
+			},
+			error: function(data){
+				window.alert("ERROR ! " + data);
+			}
+		});
+	});    	
+	
+	// SEARCH    	
+	function searchAnggota() {    		
+	    var input, filter, ul, li, a, i;
+	    input = document.getElementById("member.name");
+	    filter = input.value.toUpperCase();
+	    ul = document.getElementById("myUL");
+	    li = ul.getElementsByTagName("li");
+	    var listMember = document.getElementById("listMember");
+
+	    for (i = 0; i < li.length; i++) {
+	        a = li[i].getElementsByTagName("a")[0];
+	        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {    	        	
+	        	listAnggota.style.display = "";
+	            li[i].style.display = "";
+	        } else {
+	            li[i].style.display = "none";
+	        }
+	    }
+	}	
+  </script>
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo justify-content-center" href="/library/index">E-Library</a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-stretch">
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <span class="mdi mdi-menu"></span>
+        </button>
+      </div>
+    </nav>    
+    <div class="container-fluid page-body-wrapper">
+  		<div class="row row-offcanvas row-offcanvas-right">
+  		<!-- Right Menu -->
+  		<nav th:replace="/library/rightMenu::#sidebar"></nav>
+        <!-- partial -->
+        <div class="content-wrapper">
+            <div class="col-md-12 grid-margin stretch-card">
+	            <div class="card">
+	                <div class="card-body">
+	                  <h4 class="card-title">Borrow Book</h4>
+		              <form id="myForm" class="form-sample" action="/library/transaction/saveBorrow" th:action="@{/library/transaction/saveBorrow}" method="post">  
+			        	<input th:type="hidden" name="id" path="id" id="id"/>
+			        	<input th:type="hidden" th:if="${msg == true}" th:value="true" id="isBorrow"/>
+			            <input th:type="hidden" th:unless="${msg == true}" th:value="false" id="isBorrow"/>
+			        	<div class="form-group">
+			                <label for="content">Book Code :</label>
+			                <input type="text" class="form-control" name="book.idbook" path="book.idbook" id="book.idbook" th:value="${book.idbook}" readonly/>                
+			            </div>
+			            <div class="form-group">
+			                <label for="content">Title :</label>
+			                <input type="text" class="form-control" th:field="${book.title}" readonly/>
+			            </div>
+			            <div class="form-group">
+			                <label for="content">Total :</label>
+			                <input type="text" class="form-control" name="total" path="total" id="total" value="1" readonly/>
+			            </div>
+			            <div class="form-group">
+			                <label for="content">Available Book :</label>
+			                <input type="text" class="form-control" name="book.availability" path="book.availability" id="book.availability" th:field="${book.availability}" readonly/>
+			            </div>            
+			            <div class="form-group">
+			                <label for="content">Member Id :</label>
+			                <input type="text" class="form-control" name="member.idmember" path="member.idmember" id="member.idmember" />
+			            </div>
+			            <!-- SEARCH ID ANGGOTA -->
+			            <!-- 
+			            <div class="form-group">
+			                <label for="content">Anggota :</label>
+			                <input type="text" id="anggota.nama_anggota" onkeyup="searchAnggota();" class="form-control" />
+			            </div>
+			            
+			            <div class="form-group" id="listAnggota" style="border:1px solid #000;display:none;">
+			               	<ul id="myUL"></ul>
+			            </div> 
+			            -->
+			            <a href="javascript: validateForm();" class="btn btn-success" role="button">Save</a>
+			            <input type="button" value="Cancel" class="btn btn-danger" onclick="doCancel();"/>
+			            </form>			            
+           			</div>
+              	</div>
+            </div>            
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer th:replace="/library/footer::#footer"></footer>
+        <!-- partial -->
+      </div>
+      <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</body>
+
+</html>
