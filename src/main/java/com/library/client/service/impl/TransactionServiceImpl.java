@@ -20,6 +20,7 @@ import com.library.client.repository.BookRepository;
 import com.library.client.repository.MemberRepository;
 import com.library.client.repository.TransactionRepository;
 import com.library.client.service.TransactionService;
+import com.library.client.model.Book;
 
 @Service
 @Transactional
@@ -81,8 +82,13 @@ public class TransactionServiceImpl implements TransactionService {
 	public void acceptTransaction(String idtransaction) {
 		// TODO Auto-generated method stub
 		Transaction entity = transactionRepository.findByIdtransaction(idtransaction);
+		String idbook = entity.getBook().getIdbook();
+		Book book = bookRepository.findByIdbook(idbook);
+		int totalBook = book.getAvailability()-1;
+		book.setAvailability(totalBook);
 		if(entity.getTrx_status().equals("IN PROGRESS")) {
 			entity.setTrx_status("APPROVED");
+			entity.setBook(book);
 		}
 	}
 
@@ -90,8 +96,13 @@ public class TransactionServiceImpl implements TransactionService {
 	public void fundTransaction(String idtransaction) {
 		// TODO Auto-generated method stub
 		Transaction entity = transactionRepository.findByIdtransaction(idtransaction);
+		String idbook = entity.getBook().getIdbook();
+		Book book = bookRepository.findByIdbook(idbook);
+		int totalBook = book.getAvailability()+1;
+		book.setAvailability(totalBook);
 		if(entity.getTrx_status().equals("APPROVED")) {
 			entity.setTrx_status("FINISH");
+			entity.setBook(book);
 			Date return_date = new Date();
 			entity.setReturn_date(return_date);
 		}

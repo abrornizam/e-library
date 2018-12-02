@@ -71,11 +71,7 @@ public class TransactionController {
 	    	model.addAttribute("msg", isBorrow);
 			return "redirect:/library/transaction/borrow/"+book.getIdbook();
 		}else {
-			transactionService.saveTransaction(transaction);
-			int totalDipinjam = transaction.getTotal();
-	    	int totalBuku = book.getAvailability();
-	    	totalBuku = totalBuku - totalDipinjam;
-	    	bookService.updateBookLeft(book.getIdbook(), totalBuku);	
+			transactionService.saveTransaction(transaction);				
 		}
 		return "redirect:/library/book/listBook";		
     }
