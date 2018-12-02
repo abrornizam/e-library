@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
-@RequestMapping("/perpus/guest")
+@RequestMapping("/library/guest")
 public class GuestController {
 
 	@GetMapping(value = {"", "/", "/home", "/dasboard"})
 	public String listBuku() {
-		return "perpus/guest/home";
+		return "library/guest/home";
 	}
 	
-	@GetMapping(value = "/detail/buku/{kdbuku}")
+	@GetMapping(value = "/detail/book/{idbook}")
 	public String detailBuku() {
-		return "perpus/guest/bookDetail";
+		return "library/guest/bookDetail";
 	}
 	
-	@GetMapping(value = "/borrow/{kdbuku}")
+	@GetMapping(value = "/borrow/{idbook}")
 	public String transaction() {
-		return "perpus/guest/bookBorrow";
+		return "library/guest/bookBorrow";
 	}
 }
