@@ -10,43 +10,46 @@
   <!-- inject:css -->
   <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
   <!-- endinject -->
-  <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>  
+  <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>
+  <script type="text/javascript" th:src="@{/js/config.js}" /></script>
   <script type="text/javascript">
+  
+  	var baseURL = config.baseURL;
   	
 	$(document).ready(function(){
 		var url = window.location.href;
   		var idBuku = url.substring(url.lastIndexOf('/')+1);
 		$.ajax({
 			type: "get",
-  			url: "/rest/perpus/buku/detail/"+idBuku,
+  			url: baseURL+"/rest/library/book/detail/"+idBuku,
   			dataType: "json",
 			contentType: "application/json",
 			success: function(data){
-				var hasilData = JSON.parse(JSON.stringify(data));
-				var kdbuku = hasilData['kdbuku'];
-				var judul = hasilData['judul'];
-				var jumlah = hasilData['jumlah'];
+				var resultData = JSON.parse(JSON.stringify(data));
+				var idbook = resultData['idbook'];
+				var title = resultData['title'];
+				var availability = resultData['availability'];
 				var field = '';
 				field += '<h4 class="card-title">Borrow Book</h4>';	
 				field += '<div class="form-group">';
 				field += '<label for="content">Book Code :</label>';
-				field += '<input type="text" class="form-control" id="kdbuku" value="'+kdbuku+'" readonly/>';
+				field += '<input type="text" class="form-control" id="idbook" value="'+idbook+'" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Title :</label>';
-				field += '<input type="text" class="form-control" value="'+judul+'" readonly/>';
+				field += '<input type="text" class="form-control" value="'+title+'" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Total :</label>';
-				field += '<input type="text" class="form-control" id="jumlah" value="1" readonly/>';
+				field += '<input type="text" class="form-control" id="total" value="1" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Book Available :</label>';
-				field += '<input type="text" class="form-control" value="'+jumlah+'" readonly/>';
+				field += '<input type="text" class="form-control" value="'+availability+'" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Member Id :</label>';
-				field += '<input type="text" class="form-control" id="idanggota"/>';
+				field += '<input type="text" class="form-control" id="idmember"/>';
 				field += '</div>';
 				field += '<input type="button" value="Borrow" class="btn btn-success"/>';
 				$(".card-body").append(field);
@@ -58,37 +61,37 @@
 	});	
 	
 	function getDate(){
-		var tglPinjam = new Date();
-		var date = tglPinjam.getDate();
-		var month = tglPinjam.getMonth()+1;
-		var year = tglPinjam.getFullYear();
-		tglPinjam = year+'-'+month+'-'+date;
-		return tglPinjam;
+		var currentDate = new Date();
+		var date = currentDate.getDate();
+		var month = currentDate.getMonth()+1;
+		var year = currentDate.getFullYear();
+		currentDate = year+'-'+month+'-'+date;
+		return currentDate;
 	}
   	
 	function sendData(){
 		var formData = {
-			buku : {
-				kdbuku : $("#kdbuku").val()
+			book : {
+				idbook : $("#idbook").val()
 			},
-			anggota : {
-				idanggota : $("#idanggota").val()
+			member : {
+				idmember : $("#idmember").val()
 			},
-			jumlah : "1",
-			tgl_pinjam : getDate(),
-			tgl_kembali : "",
-			status_peminjaman : "IN PROGRESS",
+			total : "1",
+			borrow_date : getDate(),
+			return_date : "",
+			trx_status : "IN PROGRESS",
 			status : true
 		}
 		
 		$.ajax({
 			type: "post",			
-			url: "/rest/perpus/peminjaman/save",
+			url: baseURL+"/rest/library/transaction/save",
 			data: JSON.stringify(formData),
 			dataType: "json",
 			contentType: "application/json",
 			success: function(data, status){
-				window.location = "/perpus/guest";
+				window.location = "/library/guest";
 				alert("Thank You !");
 			},
 			error: function(data){
@@ -99,12 +102,12 @@
 	
 	function checkUserAlreadyBorrow(){
 		var formData = {
-			idanggota : $("#idanggota").val()
+			idmember : $("#idmember").val()
 		}		
 		
 		$.ajax({
 			type: "post",
-			url: "/rest/perpus/peminjaman/isAlreadyBorrow",
+			url: baseURL+"/rest/library/transaction/isAlreadyBorrow",
 			data: formData,
 			dataType: "json",
 			success: function(data, status){
@@ -131,7 +134,7 @@
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo justify-content-center" href="/perpus/index">E-Library</a>
+        <a class="navbar-brand brand-logo justify-content-center" href="/library/index">E-Library</a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-stretch">
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -142,7 +145,7 @@
     <div class="container-fluid page-body-wrapper">
   		<div class="row row-offcanvas row-offcanvas-right">
   		<!-- Right Menu -->
-  		<nav th:replace="/perpus/rightMenu::#sidebar"></nav>
+  		<nav th:replace="/library/rightMenu::#sidebar"></nav>
         <!-- partial -->
         <div class="content-wrapper">
             <div class="col-md-12 grid-margin stretch-card">
@@ -155,7 +158,7 @@
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        <footer th:replace="/perpus/footer::#footer"></footer>
+        <footer th:replace="/library/footer::#footer"></footer>
         <!-- partial -->
       </div>
       <!-- row-offcanvas ends -->

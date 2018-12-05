@@ -10,7 +10,8 @@
   <!-- inject:css -->
   <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}" />
   <!-- endinject -->
-  <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>  
+  <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}" /></script>
+  <script type="text/javascript" th:src="@{/js/config.js}" /></script>
   <style type="text/css">
   	th {
   		font-weight: 600;
@@ -23,44 +24,45 @@
   	$(document).ready(function(){
   		var url = window.location.href;
   		var idBuku = url.substring(url.lastIndexOf('/')+1);
+  		var baseURL = config.baseURL+"/rest/library/book/detail/"+idBuku;
   		$.ajax({
   			type: "get",
-  			url: "/rest/perpus/buku/detail/"+idBuku,
+  			url: baseURL,
   			dataType: "json",
 			contentType: "application/json",
   			success: function(data){
-  				var hasilData = JSON.parse(JSON.stringify(data));
-				var kdbuku = hasilData['kdbuku'];
-				var judul = hasilData['judul'];
-				var pengarang = hasilData['pengarang'].nama_pengarang;
-				var deskripsi = hasilData['deskripsi'];
-				var tahun = hasilData['tahun'];
-				var jumlah = hasilData['jumlah'];
+  				var resultData = JSON.parse(JSON.stringify(data));
+				var idbook = resultData['idbook'];
+				var title = resultData['title'];
+				var author = resultData['author'].name;
+				var description = resultData['description'];
+				var year = resultData['year'];
+				var availability = resultData['availability'];
 				var field = '';
 				field += '<h4 class="card-title">Detail of Book</h4>';	
 				field += '<div class="form-group">';
 				field += '<label for="content">Book Code :</label>';
-				field += '<input type="text" class="form-control" id="kdbuku" value="'+kdbuku+'" readonly/>';
+				field += '<input type="text" class="form-control" id="idbook" value="'+idbook+'" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Title :</label>';
-				field += '<input type="text" class="form-control" value="'+judul+'" readonly/>';
+				field += '<input type="text" class="form-control" value="'+title+'" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Author :</label>';
-				field += '<input type="text" class="form-control" value="'+pengarang+'" readonly/>';
+				field += '<input type="text" class="form-control" value="'+author+'" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Description :</label>';
-				field += '<input type="text" class="form-control" value="'+deskripsi+'" readonly/>';
+				field += '<input type="text" class="form-control" value="'+description+'" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Total of Book :</label>';
-				field += '<input type="text" class="form-control" value="'+jumlah+'" readonly/>';
+				field += '<input type="text" class="form-control" value="'+availability+'" readonly/>';
 				field += '</div>';
 				field += '<div class="form-group">';
 				field += '<label for="content">Author :</label>';
-				field += '<input type="text" class="form-control" value="'+judul+'" readonly/>';
+				field += '<input type="text" class="form-control" value="'+title+'" readonly/>';
 				field += '</div>';
 				field += '<input type="button" value="Borrow" class="btn btn-success" />';
 				$(".card-body").append(field);
@@ -74,8 +76,8 @@
   	$(function(){
   		$(".btn-success").ready(function(){
   			$(document).on('click', '.btn-success', function(){
-  				var kdbuku = $("#kdbuku").attr("value");
-  				window.location = "/perpus/guest/borrow/"+kdbuku;
+  				var idbook = $("#idbook").attr("value");
+  				window.location = "/library/guest/borrow/"+idbook;
   			});
   		});
   	});
@@ -87,7 +89,7 @@
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo justify-content-center" href="/perpus/index">E-Library</a>
+        <a class="navbar-brand brand-logo justify-content-center" href="/library/index">E-Library</a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-stretch">
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -98,7 +100,7 @@
     <div class="container-fluid page-body-wrapper">
   		<div class="row row-offcanvas row-offcanvas-right">
   		<!-- Right Menu -->
-  		<nav th:replace="/perpus/rightMenu::#sidebar"></nav>
+  		<nav th:replace="/library/rightMenu::#sidebar"></nav>
         <!-- partial -->
         <div class="content-wrapper">
             <div class="col-lg-12 grid-margin stretch-card">           		
@@ -110,7 +112,7 @@
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
-        <footer th:replace="/perpus/footer::#footer"></footer>
+        <footer th:replace="/library/footer::#footer"></footer>
         <!-- partial -->
       </div>
       <!-- row-offcanvas ends -->
