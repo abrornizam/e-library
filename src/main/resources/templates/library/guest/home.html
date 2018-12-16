@@ -57,10 +57,25 @@
   	
   	// Detail of Book
   	$(document).ready(function(){  		
-		$(document).on('click', '#detailBook', function(){
-			var idbook = $(this).attr("name");
-				window.location = "/library/guest/detail/book/"+idbook;				
-		});		
+  		$(document).on('click', '#detailBook', function(){
+  			var idbook = $(this).attr("name");
+  				window.location = "/library/guest/detail/book/"+idbook;				
+  		});		
+  	});
+  	
+  	$(document).ready(function(){  		
+  		$(document).on('click', '#ddlyear', function(){
+  			var year = $('').
+  			var year = $('#ddlyear');
+			var yearSelected = year.options[year.selectedIndex].val();
+			var baseURL = config.baseURL+"/rest/library/book/"+yearSelected;
+			
+			$.ajax({
+				type: "GET",
+				url: baseURL,
+				dataType
+			});
+  		});
   	});
   	
   	// Delete of Book
@@ -109,6 +124,38 @@
 			  <div class="card">
 			    <div class="card-body">
 			      <h4 class="card-title">List of Book</h4>
+			      <!-- <div class="form-group">
+                    <label for="exampleFormControlSelect3">Small select</label>
+                    <select class="form-control form-control-sm" id="exampleFormControlSelect3">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div> -->
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Filter By :</label>
+                      <div class="col-sm-4">
+                        <select class="form-control">
+                          <option>Genre</option>
+                          <option>Religion</option>
+                          <option>Comic</option>
+                          <option>Motivation</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <select class="form-control">
+                          <option>Year</option>
+                          <option>2015</option>
+                          <option>2016</option>
+                          <option>2017</option>
+                          <option>2018</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 			      <table class="table table-striped">
 			        <thead>
 			          <tr>
@@ -122,7 +169,7 @@
 			        </thead>
 			        <tbody>
 		            </tbody>
-			      </table>
+			      </table>			      
 			    </div>
 			  </div>
 			</div>

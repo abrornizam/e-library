@@ -31,7 +31,7 @@ public class IndexController extends ResponseEntityExceptionHandler {
 	public String indexApp(ModelMap model) {
 		List<Book> listBook = bookService.findAll();
 		model.addAttribute("book", listBook);
-		return "/library/book/listBook";
+		return "library/guest/home";
 	}
 		
 	@RequestMapping(value = "/error")
