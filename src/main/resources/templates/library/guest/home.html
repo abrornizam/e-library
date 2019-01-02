@@ -60,7 +60,6 @@
   		});
   	});
   	
-  	// Detail of Book
   	$(document).ready(function(){  		
   		$(document).on('click', '#detailBook', function(){
   			var idbook = $(this).attr("name");
@@ -73,50 +72,85 @@
   			var year = document.getElementById("ddlyear");
 			var yearSelected = year.options[year.selectedIndex].value;
 			
-			if(yearSelected !== "Year"){			
-				$.ajax({
-					type: "GET",
-					url: baseURL+yearSelected,
-					dataType: "json",
-					contentType: "application/json",
-					success: function(data){
-						var element = document.getElementById("tabelBody");
-						if(typeof element != "undefined"){
-							element.parentNode.removeChild(element);	
-						}
-						var tbl = document.getElementById("tabel");
-						var tbody = document.createElement("tbody");
-						tbody.id = "tabelBody";
-						tbl.appendChild(tbody);
-						renderData(data);
-					},
-					error: function(data){
-						console.log("ERROR !");
+			var genre = document.getElementById("ddlgenre");
+			var genreSelected = genre.options[genre.selectedIndex].value;
+			
+			$.ajax({
+				type: "GET",
+				url: baseURL+"filter?year="+yearSelected+"&genre="+genreSelected,
+				dataType: "json",
+				contentType: "application/json",
+				success: function(data){
+					var element = document.getElementById("tabelBody");
+					if(typeof element != "undefined"){
+						element.parentNode.removeChild(element);	
 					}
-				});
-			}
+					var tbl = document.getElementById("tabel");
+					var tbody = document.createElement("tbody");
+					tbody.id = "tabelBody";
+					tbl.appendChild(tbody);
+					renderData(data);
+				},
+				error: function(data){
+					console.log("ERROR !");
+				}
+			});
    		});
   	});
   	
-  	// Delete of Book
-  	/* $(document).ready(function(){
-  		$(document).on('click', '#deleteBuku', function(){
-  			var idbook = $(this).attr("name");
-  			var deleteData = confirm("Do you want to delete this data ?");
-  			if(deleteData == true){
-  				$.ajax({
-  	  				type: "delete",
-  	  				url: "/rest/library/book/delete/"+idbook,
-  	  				success: function(){
-  	  					window.location = "/library/guest/";
-  	  				}
-  	  			});	
-  			}else{
-  				window.location = "#";
-  			}
-  			
+  	// Fetch dropdown list genre
+  	$(document).ready(function(){
+		$.ajax({
+			type: "GET",
+			url: baseURL+"genre",
+			dataType: "json",
+			contentType: "application/json",
+			success: function(data){
+				var obj = JSON.parse(JSON.stringify(data));
+				for(var i=0; i<obj.length; i++){
+	  				var optionGenre = document.createElement("option");
+	  				optionGenre.value = obj[i].description;
+	  				optionGenre.text = obj[i].description;
+	  				var selectGenre = document.getElementById("ddlgenre");
+	  				selectGenre.append(optionGenre);
+	  			}
+			},
+			error: function(data){
+				console.log("Failed !");
+			}
   		});
-  	}); */
+  	});
+  	
+  	$(document).ready(function(){
+  		$(document).on('click', '#ddlgenre', function(){
+  			var year = document.getElementById("ddlyear");
+			var yearSelected = year.options[year.selectedIndex].value;
+			
+  			var genre = document.getElementById("ddlgenre");
+			var genreSelected = genre.options[genre.selectedIndex].value;
+			
+			$.ajax({
+				type: "GET",
+				url: baseURL+"filter?year="+yearSelected+"&genre="+genreSelected,
+				dataType: "json",
+				contentType: "application/json",
+				success: function(data){
+					var element = document.getElementById("tabelBody");
+					if(typeof element != "undefined"){
+						element.parentNode.removeChild(element);	
+					}
+					var tbl = document.getElementById("tabel");
+					var tbody = document.createElement("tbody");
+					tbody.id = "tabelBody";
+					tbl.appendChild(tbody);
+					renderData(data);
+				},
+				error: function(data){
+					console.log("ERROR !");
+				}
+			});
+		});
+  	});  	
   	
   </script>
 </head>
@@ -152,6 +186,11 @@
                           <option value="2016">2016</option>
                           <option value="2017">2017</option>
                           <option value="2018">2018</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <select class="form-control" id="ddlgenre">
+                          <option>Genre</option>
                         </select>
                       </div>
                     </div>
