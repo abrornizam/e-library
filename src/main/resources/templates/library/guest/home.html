@@ -14,8 +14,16 @@
   <script type="text/javascript" th:src="@{/js/config.js}" /></script>
   <style type="text/css">
   	th {
+  		text-align: center;
   		font-weight: 600;
   		width: 125px;
+  	}
+  	
+  	#notfound {
+  		height: 200px;
+	    font-size: 25px;
+	    color: #9e9e9e;
+	    text-align: center;
   	}
   </style>
   
@@ -81,15 +89,13 @@
 				dataType: "json",
 				contentType: "application/json",
 				success: function(data){
-					var element = document.getElementById("tabelBody");
-					if(typeof element != "undefined"){
-						element.parentNode.removeChild(element);	
+					if(data.length == 0){
+						appendTable();
+						dataNotFound();
+					}else{
+						appendTable();
+						renderData(data);
 					}
-					var tbl = document.getElementById("tabel");
-					var tbody = document.createElement("tbody");
-					tbody.id = "tabelBody";
-					tbl.appendChild(tbody);
-					renderData(data);
 				},
 				error: function(data){
 					console.log("ERROR !");
@@ -135,22 +141,45 @@
 				dataType: "json",
 				contentType: "application/json",
 				success: function(data){
-					var element = document.getElementById("tabelBody");
-					if(typeof element != "undefined"){
-						element.parentNode.removeChild(element);	
+					if(data.length == 0){
+						appendTable();
+						dataNotFound();
+					}else{
+						appendTable();
+						renderData(data);
 					}
-					var tbl = document.getElementById("tabel");
-					var tbody = document.createElement("tbody");
-					tbody.id = "tabelBody";
-					tbl.appendChild(tbody);
-					renderData(data);
 				},
 				error: function(data){
 					console.log("ERROR !");
 				}
 			});
 		});
-  	});  	
+  	});
+  	
+  	function appendTable(){
+  		var element = document.getElementById("tabelBody");
+		if(typeof element != "undefined"){
+			element.parentNode.removeChild(element);
+		}
+		var tbl = document.getElementById("tabel");
+		var tbody = document.createElement("tbody");
+		tbody.id = "tabelBody";
+		tbl.appendChild(tbody);
+  	}  	
+  	
+  	// Data not found
+  	function dataNotFound(){
+  			var tbody = document.getElementById("tabelBody");
+  			var row = document.createElement("tr");
+  			var column = document.createElement("td");
+  			column.id = "notfound";
+  			column.setAttribute("colspan", "6");
+  			row.append(column);
+  			tbody.append(row);
+  			
+  			var notfound = document.getElementById("notfound");
+  			notfound.innerHTML = "No data found";
+  	}  	
   	
   </script>
 </head>
@@ -208,7 +237,7 @@
 			        </thead>
 			        <tbody id="tabelBody">
 		            </tbody>
-			      </table>			      
+			      </table>
 			    </div>
 			  </div>
 			</div>
